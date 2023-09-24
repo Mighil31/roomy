@@ -4,19 +4,15 @@ import WomanIcon from "@mui/icons-material/Woman";
 import WcIcon from "@mui/icons-material/Wc";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import MDEditor from "@uiw/react-md-editor";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CssBaseline from "@mui/material/CssBaseline";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import "../../css/newPost.scss";
 import axiosConfig from "../Utils/axiosConfig";
-// import Typography from "@mui/material/Typography";
 import { styleConstants } from "../../constants/styleConstants";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Man } from "@mui/icons-material";
-import MarkDown from "./MarkDown";
-const steps = ["Shipping address", "Payment details", "Review your order"];
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const theme = createTheme();
 
@@ -33,7 +29,7 @@ export default function NewPostForm() {
   const [houseType, setHouseType] = React.useState("Flat");
   const [rent, setRent] = React.useState("Flat");
   const [postBody, setPostBody] = React.useState<string>("");
-  let userId = "40cd1e5f-a8b7-43aa-88d5-5fe39e3a4098";
+  let userId = "10";
 
   const sizes = styleConstants.sizesList.map((item) => (
     <div
@@ -309,9 +305,31 @@ export default function NewPostForm() {
           </div>
 
           <div className="newPost_markdown">
-            <MarkDown postBody={postBody} setPostBody={setPostBody} />
+            <div className="newPost_label">
+              <p>Enter body of post</p>
+            </div>
+            <div className="newPost_editor">
+              <CKEditor
+                editor={ClassicEditor}
+                data=""
+                onReady={(editor) => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log("Editor is ready to use!", editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  console.log({ event, editor, data });
+                }}
+                onBlur={(event, editor) => {
+                  console.log("Blur.", editor);
+                }}
+                onFocus={(event, editor) => {
+                  console.log("Focus.", editor);
+                }}
+              />
+            </div>
           </div>
-          <div className="newPost_row">
+          <div className="newPost_submit">
             <Button
               variant="contained"
               onClick={() => onSubmit()}
