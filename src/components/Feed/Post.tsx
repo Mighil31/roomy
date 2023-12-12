@@ -20,7 +20,11 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 //need to add ImageLinks if any, no of roomates looking for
 export interface POST {
-  address?: ADDRESS;
+  address1?: string;
+  address2?: string;
+  city?: string;
+  state?: string;
+  country?: string;
   postId?: string;
   user?: USER;
   postBody?: string;
@@ -32,15 +36,12 @@ export interface POST {
   noOfFilledRoommates?: 0;
 }
 
-interface ADDRESS {
-  addressId: string;
-  address1: string;
-  address2: string;
-  city: string;
-  state: string;
-  country: string;
-  pincode: string;
-}
+// interface ADDRESS {
+//   city: string;
+//   state: string;
+//   country: string;
+//   pincode: string;
+// }
 
 interface USER {
   userId: string;
@@ -84,7 +85,7 @@ export default function Post(props: POST) {
   };
 
   return (
-    <Card sx={{ width: "55%", mb: "2em" }}>
+    <Card sx={{ width: "60%", mb: "2em" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[300] }} aria-label="recipe">
@@ -128,11 +129,10 @@ export default function Post(props: POST) {
           <div className="post-info__item address_body">
             <div className="post-info__label address_label">Address</div>
             <div className="post-info__body post-info__address_display">
-              <p>{props?.address != null && props?.address.address1}</p>
-              <p>{props?.address != null && props?.address.address2}</p>
+              <p>{props?.address1}</p>
+              <p>{props?.address2}</p>
               <p>
-                {props?.address != null &&
-                  props?.address.city + ", " + props.address.state}
+                {props?.city + ", " + props.state + ", " + props.country}
               </p>
             </div>
           </div>
@@ -150,7 +150,7 @@ export default function Post(props: POST) {
             <div className="post-info__body">
               <p className="post-info__roommates">
                 {props?.noOfRoommates != null &&
-                props?.noOfFilledRoommates != null
+                  props?.noOfFilledRoommates != null
                   ? props?.noOfRoommates - props?.noOfFilledRoommates
                   : 0}
               </p>

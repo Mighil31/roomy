@@ -25,18 +25,19 @@ export default function NewPostForm() {
   const [country, setCountry] = React.useState("");
   const [pincode, setPincode] = React.useState("");
   const [noOfRoommates, setNoOfRoommates] = React.useState(1);
-  const [size, setSize] = React.useState("1 BHK");
+  const [size, setSize] = React.useState("1bhk");
   const [houseType, setHouseType] = React.useState("Flat");
   const [rent, setRent] = React.useState("Flat");
   const [postBody, setPostBody] = React.useState<string>("");
-  let userId = "10";
+  let userId = "11";
 
   const sizes = styleConstants.sizesList.map((item) => (
     <div
-      className={size === item ? "newPost_size selected" : "newPost_size"}
-      onClick={() => handleInput(setSize, item)}
+      className={size === item.value ? "newPost_size selected" : "newPost_size"}
+      onClick={() => handleInput(setSize, item.value)}
+      key={item.value}
     >
-      {item}
+      {item.type}
     </div>
   ));
 
@@ -87,6 +88,7 @@ export default function NewPostForm() {
       rent,
       postBody,
       userId,
+      "noOfFilledRoommates": 0
     };
     console.log(postData);
     try {
@@ -318,14 +320,14 @@ export default function NewPostForm() {
                 }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
-                  console.log({ event, editor, data });
+                  setPostBody(editor.getData());
                 }}
-                onBlur={(event, editor) => {
-                  console.log("Blur.", editor);
-                }}
-                onFocus={(event, editor) => {
-                  console.log("Focus.", editor);
-                }}
+              // onBlur={(event, editor) => {
+              //   // console.log("Blur.", editor);
+              // }}
+              // onFocus={(event, editor) => {
+              //   console.log("Focus.", editor);
+              // }}
               />
             </div>
           </div>

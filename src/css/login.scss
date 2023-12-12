@@ -1,7 +1,7 @@
 .login-container {
   height: 100vh;
   width: 100%;
-  //   border: 1px solid red;
+  // border: 1px solid red;
   background-color: #e9ecef;
   display: flex;
   align-items: center;
@@ -11,7 +11,7 @@
 .login-body {
   display: flex;
   width: 50%;
-  //   border: 1px solid red;
+  // border: 1px solid red;
   height: 60%;
 }
 
@@ -55,13 +55,13 @@
   }
   p {
     line-height: 155%;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
     font-size: 14px;
     color: #000;
     opacity: 0.65;
     font-weight: 400;
     max-width: 200px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 }
 
@@ -82,6 +82,13 @@
     font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Helvetica,
       Arial, sans-serif;
     font-size: 16px;
+  }
+
+  p {
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Helvetica,
+      Arial, sans-serif;
+    color: red;
+    min-height: 18px;
   }
 }
 

@@ -1,16 +1,43 @@
 import * as React from "react";
 import "../../css/login.scss";
 import Box from "@mui/material/Box";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import LockIcon from "@mui/icons-material/Lock";
 import Button from "@mui/material/Button";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../store/apis/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../store/slices/authSlice";
 
 export default function Login() {
+
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+  }, [])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const userData = await login({ email, password }).unwrap();
+      dispatch(setCredentials(userData))
+      console.log(userData)
+      navigate("/")
+    } catch (error) {
+      console.log(error)
+      setError("Email/Password was incorrect")
+    }
+  }
+
   return (
     <div className="login-container">
       <div className="login-body">
@@ -25,6 +52,7 @@ export default function Login() {
             <p>Find your roomate today</p>
           </div>
           <div className="login-form">
+            <p>{error}</p>
             <Box
               sx={{
                 display: "flex",
@@ -38,14 +66,14 @@ export default function Login() {
                   mr: 1,
                   my: 0.5,
                 }}
-                // size={"medium"}
+              // size={"medium"}
               />
               {/* <TextField
                 id="input-with-sx"
-                label="Username"
+                label="email"
                 variant="standard"
               /> */}
-              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </Box>
 
             <Box
@@ -61,7 +89,7 @@ export default function Login() {
                 label="Password"
                 variant="standard"
               /> */}
-              <input type="password" placeholder="Password" />
+              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </Box>
           </div>
           <div className="login-button">
@@ -73,6 +101,7 @@ export default function Login() {
                 fontSize: "16px",
               }}
               variant="contained"
+              onClick={handleSubmit}
             >
               Login
             </Button>

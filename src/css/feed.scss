@@ -2,12 +2,16 @@ $highlight-color: #b197fc;
 $item-color: #ebfbee;
 .post-info {
   // border: 1px solid red;
-  width: 85%;
+  width: 95%;
   margin-left: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .post-info__row {
-  width: 100%;
+  width: 90%;
   // border: 1px solid green;
   min-height: 70px;
   display: flex;
@@ -51,7 +55,7 @@ $item-color: #ebfbee;
 }
 
 .address_body {
-  width: 100%;
+  width: 90%;
   padding-left: 30px;
 }
 

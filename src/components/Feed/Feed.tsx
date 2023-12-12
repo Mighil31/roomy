@@ -12,7 +12,7 @@ export default function Feed() {
 
   useEffect(() => {
     const getFeedData = async () => {
-      const data = await axiosConfig.get("/posts");
+      const data = await axiosConfig.post("/post/all");
       console.log(data.data);
       setFeedData(data.data);
     };
@@ -26,7 +26,7 @@ export default function Feed() {
         sx={{
           bgcolor: styleConstants.bg_color,
           pt: "2em",
-          minHeight: "90vh",
+          minHeight: "95vh",
         }}
         maxWidth={false}
         disableGutters
