@@ -20,9 +20,9 @@ export default function Login() {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, [])
+  // }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -46,6 +46,13 @@ export const authApi = createApi({
           body: { ...credentials },
         }),
       }),
+      // loadUser: builder.query({
+      //   query: () => ({
+      //     url: "/auth",
+      //     method: "GET",
+
+      //   })
+      // })
     };
   },
 });

@@ -6,17 +6,16 @@ import Post, { POST } from "./Post";
 import Box from "@mui/material/Box";
 import axiosConfig from "../Utils/axiosConfig";
 import "../../css/feed.scss";
+import { useGetPostsQuery } from "../../store/apis/postApi";
+import { useDispatch } from "react-redux";
 
 export default function Feed() {
   let [feedData, setFeedData] = useState<POST[]>([]);
+  const [getPosts, { isLoading }] = useGetPostsQuery();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getFeedData = async () => {
-      const data = await axiosConfig.post("/post/all");
-      console.log(data.data);
-      setFeedData(data.data);
-    };
-    getFeedData();
+    dispatch(getPosts())
   }, []);
 
   return (
