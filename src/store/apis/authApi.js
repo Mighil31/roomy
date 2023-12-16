@@ -35,7 +35,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 };
 
 export const authApi = createApi({
-  // reducerPath: "authApi",
+  reducerPath: "authApi",
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => {
     return {

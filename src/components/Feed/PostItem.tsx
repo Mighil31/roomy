@@ -17,24 +17,8 @@ import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
 import WcIcon from "@mui/icons-material/Wc";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
+import type { Post, FeedItem } from "../../types/Post";
 //need to add ImageLinks if any, no of roomates looking for
-export interface POST {
-  address1?: string;
-  address2?: string;
-  city?: string;
-  state?: string;
-  country?: string;
-  postId?: string;
-  user?: USER;
-  postBody?: string;
-  gender?: string;
-  size?: string;
-  date?: string;
-  rent?: number;
-  noOfRoommates?: number;
-  noOfFilledRoommates?: 0;
-}
 
 // interface ADDRESS {
 //   city: string;
@@ -65,7 +49,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export default function Post(props: POST) {
+export default function PostItem(props: FeedItem) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -89,7 +73,7 @@ export default function Post(props: POST) {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[300] }} aria-label="recipe">
-            {props?.user?.name.charAt(0)}
+            {props.name.charAt(0)}
           </Avatar>
         }
         action={
@@ -103,10 +87,10 @@ export default function Post(props: POST) {
             Connect
           </Button>
         }
-        title={props?.user?.name}
+        title={props.name}
         subheader={
-          props.date &&
-          new Date(props?.date).toLocaleDateString("en-US", {
+          props.postDate &&
+          new Date(props?.postDate).toLocaleDateString("en-US", {
             month: "2-digit",
             day: "2-digit",
             year: "numeric",

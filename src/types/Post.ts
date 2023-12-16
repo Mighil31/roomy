@@ -1,5 +1,5 @@
 export interface Post {
-  post_id: number;
+  postId: number;
   gender: string;
   address1: string;
   address2?: string; // Optional property
@@ -12,4 +12,10 @@ export interface Post {
   size: string;
   rent: string;
   postBody: string;
+}
+
+export interface FeedItem extends Post {
+  userId: number;
+  name: string;
+  postDate: Date;
 }
