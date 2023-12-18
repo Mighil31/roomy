@@ -6,22 +6,21 @@ import PostItem from "./PostItem";
 import Box from "@mui/material/Box";
 import axiosConfig from "../Utils/axiosConfig";
 import "../../css/feed.scss";
-import { useGetPostsQuery } from "../../store/apis/postApi";
+import { useGetPostsQuery } from "../../store/apis/apiSlice";
 import { useDispatch } from "react-redux";
 import { setPosts } from "../../store/slices/postSlice";
-import type { FeedItem, Post } from "../../types/Post";
+// import type { FeedItem, Post } from "../../types/Post";
 
 export default function Feed() {
-  let [feedData, setFeedData] = useState<FeedItem[]>([]);
+  let [feedData, setFeedData] = useState([]);
   const { data, isLoading, isError } = useGetPostsQuery();
 
   const dispatch = useDispatch();
 
-
-  if (data) {
-    console.log("POST EXITST")
-    dispatch(setPosts(data));
-  }
+  // if (data) {
+  //   console.log("POST EXITST");
+  //   dispatch(setPosts(data));
+  // }
 
   return (
     <React.Fragment>
@@ -44,7 +43,8 @@ export default function Feed() {
             flexDirection: "column",
           }}
         >
-          {data && data.length >= 1 &&
+          {data &&
+            data.length >= 1 &&
             data.map((v) => <PostItem key={v.postId} {...v} />)}
         </Box>
         {/* </Container> */}

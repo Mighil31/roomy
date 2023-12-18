@@ -11,8 +11,10 @@ import "../../css/newPost.scss";
 import axiosConfig from "../Utils/axiosConfig";
 import { styleConstants } from "../../constants/styleConstants";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNewPostMutation } from "../../store/apis/apiSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -29,7 +31,7 @@ export default function NewPostForm() {
   const [houseType, setHouseType] = React.useState("Flat");
   const [rent, setRent] = React.useState("Flat");
   const [postBody, setPostBody] = React.useState<string>("");
-  let userId = "11";
+  const navigate = useNavigate();
 
   const sizes = styleConstants.sizesList.map((item) => (
     <div
@@ -74,6 +76,8 @@ export default function NewPostForm() {
     setValue(value);
   };
 
+  const [addPost, { isLoading }] = useNewPostMutation();
+
   const onSubmit = async () => {
     const postData = {
       gender,
@@ -87,14 +91,12 @@ export default function NewPostForm() {
       size,
       rent,
       postBody,
-      userId,
       "noOfFilledRoommates": 0
     };
     console.log(postData);
     try {
-      console.log("Post");
-      const res = await axiosConfig.post("/post", postData);
-      console.log(res);
+      const res = await addPost(postData).unwrap();
+      navigate("/");
     } catch (error) {
       console.error(error);
     }

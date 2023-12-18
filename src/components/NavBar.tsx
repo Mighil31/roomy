@@ -17,6 +17,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import "../css/index.css";
 import { styleConstants } from "../constants/styleConstants";
+import { logOut } from "../store/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -33,6 +35,7 @@ const Search = styled("div")(({ theme }) => ({
     width: "auto",
   },
 }));
+
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -59,6 +62,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
+  const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -77,6 +82,12 @@ export default function NavBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    dispatch(logOut())
   };
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -102,6 +113,7 @@ export default function NavBar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 

@@ -6,7 +6,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../store/apis/authApi";
+import { useLoginMutation } from "../../store/apis/apiSlice";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../store/slices/authSlice";
 
@@ -30,7 +30,7 @@ export default function Login() {
     try {
       const userData = await login({ email, password }).unwrap();
       dispatch(setCredentials(userData))
-      console.log(userData)
+      // console.log(userData)
       navigate("/")
     } catch (error) {
       console.log(error)
