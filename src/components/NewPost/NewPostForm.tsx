@@ -101,6 +101,7 @@ export default function NewPostForm() {
       console.error(error);
     }
   };
+
   return (
     <React.Fragment>
       <CssBaseline />

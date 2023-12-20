@@ -27,12 +27,6 @@ import type { Post, FeedItem } from "../../types/Post";
 //   pincode: string;
 // }
 
-interface USER {
-  userId: string;
-  username: string;
-  name: string;
-  email: string;
-}
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -51,7 +45,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export default function PostItem(props: FeedItem) {
   const [expanded, setExpanded] = React.useState(false);
-
+  console.log(props.userId)
+  console.log(props.userData.userId)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -69,14 +64,14 @@ export default function PostItem(props: FeedItem) {
   };
 
   return (
-    <Card sx={{ width: "60%", mb: "2em" }}>
+    <Card sx={{ width: "55%", mb: "2em" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[300] }} aria-label="recipe">
             {props.name.charAt(0)}
           </Avatar>
         }
-        action={
+        action={props.userId != props.userData.userId ? (
           <Button
             variant="contained"
             // onClick={() => onSubmit()}
@@ -85,7 +80,7 @@ export default function PostItem(props: FeedItem) {
             }}
           >
             Connect
-          </Button>
+          </Button>) : null
         }
         title={props.name}
         subheader={

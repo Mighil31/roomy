@@ -31,8 +31,7 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     setCredentials(state, action: PayloadAction<SetCredentialsPayload>) {
-      const { userId, name, accessToken } = action.payload;
-      state.user = { userId, name };
+      const { accessToken } = action.payload;
       state.token = accessToken;
       localStorage.setItem("jwtToken", accessToken);
     },

@@ -6,21 +6,37 @@ import PostItem from "./PostItem";
 import Box from "@mui/material/Box";
 import axiosConfig from "../Utils/axiosConfig";
 import "../../css/feed.scss";
-import { useGetPostsQuery } from "../../store/apis/apiSlice";
+import { useGetPostsQuery, useLoadUserQuery } from "../../store/apis/apiSlice";
 import { useDispatch } from "react-redux";
 import { setPosts } from "../../store/slices/postSlice";
 // import type { FeedItem, Post } from "../../types/Post";
 
 export default function Feed() {
   let [feedData, setFeedData] = useState([]);
-  const { data, isLoading, isError } = useGetPostsQuery();
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    isError: userDataError,
+    refetch: refetchUserData,
+  } = useLoadUserQuery();
+  const {
+    data,
+    isLoading,
+    isError,
+    refetch: refetchPostsData,
+  } = useGetPostsQuery(userData);
 
   const dispatch = useDispatch();
-
+  // console.log(userData);
+  // console.log(data);
   // if (data) {
   //   console.log("POST EXITST");
   //   dispatch(setPosts(data));
   // }
+  useEffect(() => {
+    refetchUserData();
+    // refetchPosts();
+  }, [userData, refetchUserData]);
 
   return (
     <React.Fragment>
@@ -44,8 +60,11 @@ export default function Feed() {
           }}
         >
           {data &&
+            userData &&
             data.length >= 1 &&
-            data.map((v) => <PostItem key={v.postId} {...v} />)}
+            data.map((v) => (
+              <PostItem key={v.postId} {...v} userData={userData} />
+            ))}
         </Box>
         {/* </Container> */}
       </Container>

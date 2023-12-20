@@ -15,15 +15,15 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  console.log("base query with re auth");
-  console.log(result);
+  console.log("base query with re auth - refreshing token");
+  // console.log(result);
   if (result?.error?.status === 401) {
-    console.log("sending request token");
+    // console.log("sending request token");
     const refreshResult = await baseQuery("/refresh", api, extraOptions);
-    console.log(refreshResult);
+    // console.log(refreshResult);
     if (refreshResult?.data) {
       const user = api.getState().auth.user;
-      console.log(user);
+      // console.log(user);
       api.dispatch(setCredentials({ ...refreshResult.data, user }));
 
       result = await baseQuery(args, api, extraOptions);
@@ -59,16 +59,19 @@ export const apiSlice = createApi({
           body: body,
         }),
       }),
-      // loadUser: builder.query({
-      //   query: () => ({
-      //     url: "/auth",
-      //     method: "GET",
-
-      //   })
-      // })
+      loadUser: builder.query({
+        query: () => ({
+          url: "/auth",
+          method: "GET",
+        }),
+      }),
     };
   },
 });
 
-export const { useLoginMutation, useGetPostsQuery, useNewPostMutation } =
-  apiSlice;
+export const {
+  useLoginMutation,
+  useGetPostsQuery,
+  useNewPostMutation,
+  useLoadUserQuery,
+} = apiSlice;

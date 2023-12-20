@@ -14,8 +14,16 @@ export interface Post {
   postBody: string;
 }
 
+interface USER {
+  userId: number;
+  username: string;
+  name: string;
+  email: string;
+}
+
 export interface FeedItem extends Post {
   userId: number;
   name: string;
   postDate: Date;
+  userData: USER;
 }
