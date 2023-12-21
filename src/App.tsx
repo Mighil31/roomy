@@ -4,6 +4,7 @@ import Chat from "./components/Chat/Chat";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Feed from "./components/Feed/Feed";
 import Login from "./components/Login/Login";
+import Signup from "./components/Login/Signup";
 import NewPostForm from "./components/NewPost/NewPostForm";
 import RequireAuth from "./components/Login/RequireAuth";
 
@@ -28,6 +29,7 @@ function App() {
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );

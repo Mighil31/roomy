@@ -39,6 +39,13 @@ export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => {
     return {
+      signup: builder.mutation({
+        query: (body) => ({
+          url: "/user",
+          method: "POST",
+          body: body,
+        }),
+      }),
       login: builder.mutation({
         query: (credentials) => ({
           url: "/auth",
@@ -70,6 +77,7 @@ export const apiSlice = createApi({
 });
 
 export const {
+  useSignupMutation,
   useLoginMutation,
   useGetPostsQuery,
   useNewPostMutation,

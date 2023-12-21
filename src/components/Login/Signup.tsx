@@ -3,20 +3,23 @@ import "../../css/login.scss";
 import Box from "@mui/material/Box";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import LockIcon from "@mui/icons-material/Lock";
+import PersonIcon from "@mui/icons-material/Person";
 import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../store/apis/apiSlice";
+import { useSignupMutation } from "../../store/apis/apiSlice";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../store/slices/authSlice";
 
-export default function Login() {
+export default function Signup() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+
   const navigate = useNavigate();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [signup, { isLoading }] = useSignupMutation();
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -27,9 +30,8 @@ export default function Login() {
     e.preventDefault();
     setError("");
     try {
-      const userData = await login({ email, password }).unwrap();
-      dispatch(setCredentials(userData));
-      // console.log(userData)
+      const accessToken = await signup({ name, email, password }).unwrap();
+      dispatch(setCredentials(accessToken));
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -43,7 +45,7 @@ export default function Login() {
         <div className="login-left-pane">
           <img src="apartments.jpg" alt="login_image" />
           <div className="overlay-text">
-            <p>New here? Get Started!</p>
+            <p>Already Registered?</p>
             <div className="signup-button">
               <Button
                 style={{
@@ -53,9 +55,9 @@ export default function Login() {
                   fontSize: "16px",
                 }}
                 variant="contained"
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/login")}
               >
-                Sign up
+                Login
               </Button>
             </div>
           </div>
@@ -69,6 +71,15 @@ export default function Login() {
           </div>
           <div className="login-form">
             <p>{error}</p>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <PersonIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Box>
             <Box
               sx={{
                 display: "flex",
@@ -129,7 +140,7 @@ export default function Login() {
               variant="contained"
               onClick={handleSubmit}
             >
-              Login
+              Sign Up
             </Button>
           </div>
         </div>
