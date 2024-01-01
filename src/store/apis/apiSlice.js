@@ -53,6 +53,12 @@ export const apiSlice = createApi({
           body: { ...credentials },
         }),
       }),
+      getUser: builder.query({
+        query: () => ({
+          url: "/auth",
+          method: "GET",
+        }),
+      }),
       getPosts: builder.query({
         query: () => ({
           url: "/post",
@@ -72,6 +78,12 @@ export const apiSlice = createApi({
           method: "GET",
         }),
       }),
+      getConversationList: builder.query({
+        query: () => ({
+          url: `/chat/list`,
+          method: "GET",
+        }),
+      }),
     };
   },
 });
@@ -82,4 +94,6 @@ export const {
   useGetPostsQuery,
   useNewPostMutation,
   useLoadUserQuery,
+  useGetConversationListQuery,
+  useGetUserQuery,
 } = apiSlice;

@@ -41,8 +41,8 @@ export default function Login() {
     <div className="login-container">
       <div className="login-body">
         <div className="login-left-pane">
-          <img src="apartments.jpg" alt="login_image" />
-          <div className="overlay-text">
+          <img src="mountains.jpg" alt="login_image" />
+          {/* <div className="overlay-text">
             <p>New here? Get Started!</p>
             <div className="signup-button">
               <Button
@@ -57,8 +57,8 @@ export default function Login() {
               >
                 Sign up
               </Button>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
         </div>
         <div className="login-right-pane">
           <div className="login-title">
@@ -82,7 +82,7 @@ export default function Login() {
                   mr: 1,
                   my: 0.5,
                 }}
-                // size={"medium"}
+              // size={"medium"}
               />
               {/* <TextField
                 id="input-with-sx"
@@ -134,6 +134,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }

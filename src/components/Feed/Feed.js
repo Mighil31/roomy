@@ -27,12 +27,6 @@ export default function Feed() {
   } = useGetPostsQuery(userData);
 
   const dispatch = useDispatch();
-  // console.log(userData);
-  // console.log(data);
-  // if (data) {
-  //   console.log("POST EXITST");
-  //   dispatch(setPosts(data));
-  // }
   useEffect(() => {
     refetchUserData();
     // refetchPosts();

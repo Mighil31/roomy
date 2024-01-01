@@ -16,8 +16,8 @@ const postSlice = createSlice({
   initialState: initialState,
   reducers: {
     setPosts(state, action: PayloadAction<FeedItem[]>) {
-      console.log("SET POSTS");
-      console.log(action.payload);
+      // console.log("SET POSTS");
+      // console.log(action.payload);
       state.posts = action.payload;
     },
   },
