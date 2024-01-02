@@ -1,4 +1,4 @@
 export interface ConversedUser {
-  userId: number;
-  name: string;
+  userId: number | null;
+  name: string | null;
 }

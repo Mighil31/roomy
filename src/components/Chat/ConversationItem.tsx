@@ -7,14 +7,11 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { useGetUserQuery } from "../../store/apis/apiSlice";
 import type { ConversedUser } from "../../types/Chat";
-interface ConversationItemProps {
-  user: ConversedUser;
-}
 
 const ConversationItem: React.FC<ConversedUser> = ({ userId, name }) => {
   console.log(name)
   return (
-    <>
+    <div className="listItemContainer">
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
@@ -37,7 +34,7 @@ const ConversationItem: React.FC<ConversedUser> = ({ userId, name }) => {
         />
       </ListItem>
       <Divider variant="inset" component="li" />
-    </>
+    </div>
   );
 }
 
