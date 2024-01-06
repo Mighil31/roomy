@@ -84,6 +84,12 @@ export const apiSlice = createApi({
           method: "GET",
         }),
       }),
+      getMessages: builder.query({
+        query: (conversationId) => ({
+          url: `/chat/message/${conversationId}`,
+          method: "GET",
+        }),
+      }),
     };
   },
 });
@@ -96,4 +102,5 @@ export const {
   useLoadUserQuery,
   useGetConversationListQuery,
   useGetUserQuery,
+  useGetMessagesQuery,
 } = apiSlice;

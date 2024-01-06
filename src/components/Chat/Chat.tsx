@@ -3,15 +3,9 @@ import Container from "@mui/material/Container";
 import { styleConstants } from "../../constants/styleConstants";
 import "../../css/chat.scss";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import { useGetConversationListQuery } from "../../store/apis/apiSlice";
+import { useGetConversationListQuery, useGetMessagesQuery } from "../../store/apis/apiSlice";
 import ConversationItem from "./ConversationItem";
-import type { ConversedUser } from "../../types/Chat";
+import type { ConversedUser, Message } from "../../types/Chat";
 import MessagePane from "./MessagePane";
 // import
 
@@ -22,25 +16,28 @@ export default function Chat() {
     isError,
   } = useGetConversationListQuery({});
   const [selectedUser, setSelectedUser] = useState<ConversedUser>({
-    userId: null,
-    name: null
+    userId: -1,
+    name: null,
+    conversationId: null
   })
+  const { data: messages, isLoading: isMessagesLoading, isError: isMessagesError, refetch } = useGetMessagesQuery(selectedUser.conversationId);
+
+  useEffect(() => {
+    if (!isConversationListLoading && conversationList != null && conversationList.length > 0) {
+      setSelectedUser(conversationList[0]);
+    }
+  }, [isConversationListLoading, conversationList]);
+
   let content;
   if (isConversationListLoading)
     content = "Loading"
-  else {
-    console.log(conversationList[0])
+  else if (conversationList != null) {
     content = conversationList.map((conversedUser: ConversedUser) => {
-      return <ConversationItem {...conversedUser} key={conversedUser.userId} />
+      return <ConversationItem conversedUser={conversedUser} key={conversedUser.userId} setSelectedUser={setSelectedUser} />
     })
   }
 
-  useEffect(() => {
-    if (!isConversationListLoading && conversationList.length > 0) {
-      setSelectedUser(conversationList[0]);
-      // console.log(conversationList[0]);
-    }
-  }, [isConversationListLoading]);
+  // console.log(messages)
 
   return (
     <>
@@ -55,7 +52,7 @@ export default function Chat() {
               {content}
             </List>
           </div>
-          <MessagePane {...selectedUser} />
+          <MessagePane selectUser={selectedUser} messages={messages} />
         </div>
       </Container>
     </>
