@@ -8,14 +8,20 @@ import Divider from "@mui/material/Divider";
 import { useGetUserQuery } from "../../store/apis/apiSlice";
 import type { ConversedUser } from "../../types/Chat";
 
-const ConversationItem: React.FC<{ conversedUser: ConversedUser; setSelectedUser: (user: ConversedUser) => void }> = ({ conversedUser, setSelectedUser }) => {
+interface ConversationItemProps {
+  conversedUser: ConversedUser;
+  selectedUser: ConversedUser;
+  setSelectedUser: (arg: ConversedUser) => void;
+}
+
+const ConversationItem: React.FC<ConversationItemProps> = ({ conversedUser, setSelectedUser, selectedUser }) => {
   // console.log(name)
   const handleClick = (clickedUser: ConversedUser) => {
     // console.log(clickedUser)
     setSelectedUser(clickedUser)
   }
   return (
-    <div className="listItemContainer" onClick={() => handleClick(conversedUser)}>
+    <div className={"listItemContainer" + (selectedUser.userId == conversedUser.userId ? " selectedUser" : "")} onClick={() => handleClick(conversedUser)}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />

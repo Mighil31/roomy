@@ -45,8 +45,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export default function PostItem(props: FeedItem) {
   const [expanded, setExpanded] = React.useState(false);
-  console.log(props.userId)
-  console.log(props.userData.userId)
+  // console.log(props.userId)
+  // console.log(props.userData.userId)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

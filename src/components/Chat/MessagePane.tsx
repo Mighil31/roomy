@@ -1,18 +1,37 @@
 import type { ConversedUser, Message } from "../../types/Chat"
 import { useGetUserQuery } from "../../store/apis/apiSlice";
+import io from 'socket.io-client';
+import React, { useState, useEffect } from "react";
+import type { Socket } from "socket.io-client";
+import type { RefObject, MutableRefObject } from "react";
+
 interface MessagePaneProps {
   selectUser: ConversedUser;
-  messages: Message[]; // replace 'any' with the actual argument type of your function
+  messages: Message[];
+  socket: MutableRefObject<Socket> | undefined;
 }
 
-const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages }) => {
-  console.log(messages)
+const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket }) => {
+  // console.log(messages)
+  const [messageInput, setMessageInput] = useState('');
+
+  const sendMessage = () => {
+    const room = selectUser.conversationId;
+    const message = messageInput;
+
+    if (message.trim() !== '') {
+      console.log("Message send")
+      socket?.current?.emit("send_message", { room, message });
+      setMessageInput('')
+    }
+  };
   // let curUserMessages=[{}], otherUserMessages=[{}];
   const {
     data: loggedInUser,
     isLoading: isUserLoading,
     isError,
   } = useGetUserQuery({});
+
   let content;
   if (messages == null || messages.length == 0 || isUserLoading)
     content = <div>Nothing lol</div>
@@ -25,6 +44,11 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages }) => {
       else
         return <div key={message.messageId} className="message stark">{message.content}</div>
     })
+    socket?.current.on("receive_message", (data) => {
+      // console.log(`Received message for user ${conversation.userId}:`, data);
+      // Handle the received message in your React component
+      console.log(data)
+    });
   }
 
   return (
@@ -52,7 +76,13 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages }) => {
         <div className="input">
           <i className="fas fa-camera"></i>
           <i className="far fa-laugh-beam"></i>
-          <input placeholder="Type your message here!" type="text" />
+          <input
+            placeholder="Type your message here!"
+            type="text"
+            value={messageInput}
+            onChange={(event) => setMessageInput(event.target.value)}
+            onKeyDown={(e) => { if (e.key == 'Enter') sendMessage() }}
+          />
           <i className="fas fa-microphone"></i>
         </div>
       </div>

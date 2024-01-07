@@ -1,5 +1,5 @@
 export interface ConversedUser {
-  userId: number | null;
+  userId: number;
   name: string | null;
   conversationId: number | null;
 }

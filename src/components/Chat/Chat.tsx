@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Container from "@mui/material/Container";
 import { styleConstants } from "../../constants/styleConstants";
 import "../../css/chat.scss";
@@ -7,9 +7,14 @@ import { useGetConversationListQuery, useGetMessagesQuery } from "../../store/ap
 import ConversationItem from "./ConversationItem";
 import type { ConversedUser, Message } from "../../types/Chat";
 import MessagePane from "./MessagePane";
-// import
+import io from 'socket.io-client';
+import { Socket } from "socket.io-client";
 
 export default function Chat() {
+
+  const [userSockets, setUserSockets] = useState<{ [key: string]: Socket }>({});
+  const socket = useRef() as React.MutableRefObject<Socket>;
+
   const {
     data: conversationList,
     isLoading: isConversationListLoading,
@@ -25,7 +30,23 @@ export default function Chat() {
   useEffect(() => {
     if (!isConversationListLoading && conversationList != null && conversationList.length > 0) {
       setSelectedUser(conversationList[0]);
+      socket.current = io("http://localhost:5000");
+
     }
+    if (conversationList != null) {
+      conversationList.forEach((conversation: ConversedUser) => {
+        if (conversation.userId != null) {
+          socket.current.emit("join_room", conversation.conversationId);
+
+        }
+      });
+
+    }
+
+    // Cleanup function to disconnect sockets when component unmounts
+    return () => {
+      socket?.current?.disconnect();
+    };
   }, [isConversationListLoading, conversationList]);
 
   let content;
@@ -33,11 +54,14 @@ export default function Chat() {
     content = "Loading"
   else if (conversationList != null) {
     content = conversationList.map((conversedUser: ConversedUser) => {
-      return <ConversationItem conversedUser={conversedUser} key={conversedUser.userId} setSelectedUser={setSelectedUser} />
+      return <ConversationItem
+        selectedUser={selectedUser}
+        conversedUser={conversedUser}
+        key={conversedUser.userId}
+        setSelectedUser={setSelectedUser}
+      />
     })
   }
-
-  // console.log(messages)
 
   return (
     <>
@@ -52,7 +76,7 @@ export default function Chat() {
               {content}
             </List>
           </div>
-          <MessagePane selectUser={selectedUser} messages={messages} />
+          <MessagePane selectUser={selectedUser} messages={messages} socket={socket} />
         </div>
       </Container>
     </>
