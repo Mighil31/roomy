@@ -12,7 +12,6 @@ import { Socket } from "socket.io-client";
 
 export default function Chat() {
 
-  const [userSockets, setUserSockets] = useState<{ [key: string]: Socket }>({});
   const socket = useRef() as React.MutableRefObject<Socket>;
 
   const {
@@ -25,35 +24,41 @@ export default function Chat() {
     name: null,
     conversationId: null
   })
-  const { data: messages, isLoading: isMessagesLoading, isError: isMessagesError, refetch } = useGetMessagesQuery(selectedUser.conversationId);
+  const { data: messages, isLoading: isMessagesLoading, isFetching: isMessagesFetching, isError: isMessagesError, refetch } = useGetMessagesQuery(selectedUser.conversationId);
+
+  useEffect(() => {
+    socket.current = io('http://localhost:5000');
+    socket?.current.on("receive_message", (data) => {
+
+      refetch();
+      // messages.append(data.data[0])
+    });
+    console.log("HELLLLLLLLLLLLLLLLLLLL")
+    // return () => {
+    //   socket.current.disconnect();
+    // };
+  }, []);
 
   useEffect(() => {
     if (!isConversationListLoading && conversationList != null && conversationList.length > 0) {
       setSelectedUser(conversationList[0]);
-      socket.current = io("http://localhost:5000");
-
     }
     if (conversationList != null) {
       conversationList.forEach((conversation: ConversedUser) => {
         if (conversation.userId != null) {
+          console.log("Joining")
           socket.current.emit("join_room", conversation.conversationId);
-
         }
       });
-
     }
 
-    // Cleanup function to disconnect sockets when component unmounts
-    return () => {
-      socket?.current?.disconnect();
-    };
-  }, [isConversationListLoading, conversationList]);
+  }, [conversationList]);
 
-  let content;
+  let conversationItems;
   if (isConversationListLoading)
-    content = "Loading"
+    conversationItems = "Loading"
   else if (conversationList != null) {
-    content = conversationList.map((conversedUser: ConversedUser) => {
+    conversationItems = conversationList.map((conversedUser: ConversedUser) => {
       return <ConversationItem
         selectedUser={selectedUser}
         conversedUser={conversedUser}
@@ -73,7 +78,7 @@ export default function Chat() {
         <div className="chatPane">
           <div className="contactNames">
             <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-              {content}
+              {conversationItems}
             </List>
           </div>
           <MessagePane selectUser={selectedUser} messages={messages} socket={socket} />
@@ -82,3 +87,5 @@ export default function Chat() {
     </>
   );
 }
+
+

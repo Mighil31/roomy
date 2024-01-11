@@ -85,9 +85,24 @@ export const apiSlice = createApi({
         }),
       }),
       getMessages: builder.query({
+        providesTags: (result, error, conversationId) => {
+          console.log("TAG PROVIDED");
+          return [{ type: "Messages" }];
+        },
         query: (conversationId) => ({
           url: `/chat/message/${conversationId}`,
           method: "GET",
+        }),
+      }),
+      createMessage: builder.mutation({
+        invalidatesTags: (result, error, data) => {
+          console.log("TAG INVALIDATED");
+          return [{ type: "Messages" }];
+        },
+        query: ({ conversationId, message }) => ({
+          url: `/chat/message/${conversationId}`,
+          method: "POST",
+          body: { content: message },
         }),
       }),
     };
@@ -103,4 +118,5 @@ export const {
   useGetConversationListQuery,
   useGetUserQuery,
   useGetMessagesQuery,
+  useCreateMessageMutation,
 } = apiSlice;
