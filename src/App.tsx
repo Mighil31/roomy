@@ -24,7 +24,7 @@ function App() {
         <Route path="/" element={<PageWithNavBar />}>
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Feed />} />
-            <Route path="/messaging" element={<Chat />} />
+            <Route path="/messaging/:conversationId?" element={<Chat />} />
             <Route path="/newPost" element={<NewPostForm />} />
           </Route>
         </Route>
