@@ -37,6 +37,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
+  tagTypes: ["Messages", "Conversation", "LastMessage"],
   endpoints: (builder) => {
     return {
       signup: builder.mutation({
@@ -80,7 +81,7 @@ export const apiSlice = createApi({
       }),
       getConversationList: builder.query({
         providesTags: (result, error, conversationId) => {
-          return [{ type: "Conversation" }];
+          return ["Conversation"];
         },
         query: () => ({
           url: `/chat/list`,
@@ -89,18 +90,29 @@ export const apiSlice = createApi({
       }),
       getMessages: builder.query({
         providesTags: (result, error, conversationId) => {
-          console.log("TAG PROVIDED");
-          return [{ type: "Messages" }];
+          // console.log("TAG PROVIDED");
+          return ["Messages"];
         },
         query: (conversationId) => ({
           url: `/chat/message/${conversationId}`,
           method: "GET",
         }),
+        invalidatesTags: (result, error, data) => {
+          console.log("Invalidate LastMessage tag");
+          return ["LastMessage"];
+        },
+      }),
+      getLastMessage: builder.query({
+        providesTags: ["Messages", "LastMessage"],
+        query: (conversationId) => ({
+          url: `/chat/message/${conversationId}?last=true`,
+          method: "GET",
+        }),
       }),
       createMessage: builder.mutation({
         invalidatesTags: (result, error, data) => {
-          console.log("TAG INVALIDATED");
-          return [{ type: "Messages" }];
+          console.log("Invalidate Messages");
+          return ["Messages"];
         },
         query: ({ conversationId, message }) => ({
           url: `/chat/message/${conversationId}`,
@@ -110,8 +122,8 @@ export const apiSlice = createApi({
       }),
       createConversation: builder.mutation({
         invalidatesTags: (result, error, data) => {
-          console.log("TAG INVALIDATED");
-          return [{ type: "Conversation" }];
+          console.log("Conversation TAG INVALIDATED");
+          return error.data.errors ? [] : ["Conversation"];
         },
         query: (body) => ({
           url: `/chat`,
@@ -134,4 +146,5 @@ export const {
   useGetMessagesQuery,
   useCreateMessageMutation,
   useCreateConversationMutation,
+  useGetLastMessageQuery,
 } = apiSlice;

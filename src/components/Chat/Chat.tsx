@@ -7,7 +7,8 @@ import {
   useGetConversationListQuery,
   useGetMessagesQuery,
   useGetUserQuery,
-  useCreateConversationMutation
+  useCreateConversationMutation,
+  apiSlice
 } from "../../store/apis/apiSlice";
 import ConversationItem from "./ConversationItem";
 import type { ConversedUser, Message } from "../../types/Chat";
@@ -15,22 +16,13 @@ import MessagePane from "./MessagePane";
 import io from 'socket.io-client';
 import { Socket } from "socket.io-client";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export default function Chat() {
 
   const socket = useRef() as React.MutableRefObject<Socket>;
   const params = useParams();
-  console.log("CONVERSATION ID PARAM = " + JSON.stringify(params))
-  useEffect(() => {
-    socket.current = io('http://localhost:5000');
-    socket?.current.on("receive_message", (data) => {
-      refetch();
-    });
-
-    // return () => {
-    //   socket.current.disconnect();
-    // };
-  }, []);
+  const dispatch = useDispatch();
 
   const {
     data: conversationList,
@@ -55,26 +47,41 @@ export default function Chat() {
       refetch
     } = useGetMessagesQuery(selectedUser.conversationId);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    socket.current = io('http://localhost:5000');
+    socket?.current.on("receive_message", (data) => {
+      refetch();
+      dispatch(apiSlice.util.invalidateTags(["LastMessage"]))
+    });
 
+    // return () => {
+    //   socket.current.disconnect();
+    // };
+  }, []);
 
   useEffect(() => {
     if (!isConversationListLoading && conversationList != null && conversationList.length > 0) {
       setSelectedUser(conversationList[0]);
     }
+    let conversationFound = false
     if (conversationList != null) {
       conversationList.forEach((conversation: ConversedUser) => {
         if (conversation.userId != null) {
-          console.log("Joining")
+          // console.log("Joining")
           socket.current.emit("join_room", conversation.conversationId);
+        }
+        if (String(conversation.userId) == params?.userId) {
+          conversationFound = true;
+          setSelectedUser(conversation)
         }
       });
     }
-    if (params?.conversationId != null) {
-
+    if (!conversationFound && params.userId != null) {
+      createConversation({ "user2_id": params.userId })
     }
 
-
-  }, [conversationList]);
+  }, [conversationList, isUserLoading]);
 
   let conversationItems;
   if (isConversationListLoading)
@@ -93,7 +100,7 @@ export default function Chat() {
   return (
     <>
       <Container
-        sx={{ bgcolor: styleConstants.bg_color, minHeight: "100vh", pt: "2em" }}
+        sx={{ bgcolor: styleConstants.bg_color, minHeight: "94vh", pt: "2em" }}
         maxWidth={false}
         disableGutters
       >

@@ -16,6 +16,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
 import WcIcon from "@mui/icons-material/Wc";
+import { useNavigate } from "react-router-dom";
+import Markdown from 'react-markdown'
+
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import type { Post, FeedItem } from "../../types/Post";
 //need to add ImageLinks if any, no of roomates looking for
@@ -45,11 +48,17 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export default function PostItem(props: FeedItem) {
   const [expanded, setExpanded] = React.useState(false);
+  let navigate = useNavigate();
   // console.log(props.userId)
   // console.log(props.userData.userId)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const routeChange = () => {
+    let path = `/messaging/${props.userId}`;
+    navigate(path);
+  }
 
   const genderIcon = () => {
     // console.log(`GENDER = ${props.gender}`);
@@ -74,7 +83,7 @@ export default function PostItem(props: FeedItem) {
         action={props.userId != props.userData.userId ? (
           <Button
             variant="contained"
-            // onClick={() => onSubmit()}
+            onClick={() => routeChange()}
             style={{
               backgroundColor: "#b197fc",
             }}
@@ -100,7 +109,9 @@ export default function PostItem(props: FeedItem) {
           paddingLeft: "30px",
         }}
       >
-        <ReactMarkdown children={props?.postBody ? props?.postBody : ""} />
+        {/* <Markdown children={props?.postBody ? props?.postBody : ""} /> */}
+        <Markdown>{props?.postBody ? props?.postBody : ""}</Markdown>
+
       </CardContent>
 
       <div className="post-info">

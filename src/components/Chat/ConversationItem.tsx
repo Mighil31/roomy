@@ -5,21 +5,27 @@ import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import { useGetUserQuery } from "../../store/apis/apiSlice";
+import { useGetLastMessageQuery } from "../../store/apis/apiSlice";
 import type { ConversedUser } from "../../types/Chat";
 
 interface ConversationItemProps {
   conversedUser: ConversedUser;
   selectedUser: ConversedUser;
   setSelectedUser: (arg: ConversedUser) => void;
+  // lastMessage: string
 }
 
 const ConversationItem: React.FC<ConversationItemProps> = ({ conversedUser, setSelectedUser, selectedUser }) => {
-  // console.log(name)
+  // console.log(JSON.stringify(conversedUser))
   const handleClick = (clickedUser: ConversedUser) => {
     // console.log(clickedUser)
     setSelectedUser(clickedUser)
   }
+  const
+    { data: lastMessage,
+      refetch: refetchLastMessage
+    } = useGetLastMessageQuery(conversedUser.conversationId);
+  // console.log(lastMessage)
   return (
     <div className={"listItemContainer" + (selectedUser.userId == conversedUser.userId ? " selectedUser" : "")} onClick={() => handleClick(conversedUser)}>
       <ListItem alignItems="flex-start">
@@ -36,9 +42,9 @@ const ConversationItem: React.FC<ConversationItemProps> = ({ conversedUser, setS
                 variant="body2"
                 color="text.primary"
               >
-                Ali Connors
+                {/* Ali Connors */}
               </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
+              {lastMessage?.length > 0 ? lastMessage[0].content : ""}
             </React.Fragment>
           }
         />

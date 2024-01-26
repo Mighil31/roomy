@@ -170,10 +170,13 @@ export default function NavBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: "red" }}>
-      <AppBar position="static" sx={{ bgcolor: styleConstants.navBar_color }}>
+    <Box sx={{ flexGrow: 1, bgcolor: "red", maxHeight: "5vh" }}>
+      <AppBar
+        position="static"
+        sx={{ bgcolor: styleConstants.navBar_color }}
+      >
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -181,7 +184,7 @@ export default function NavBar() {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography
             variant="h6"
             noWrap
@@ -190,7 +193,7 @@ export default function NavBar() {
           >
             Roomy
           </Typography>
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -198,10 +201,10 @@ export default function NavBar() {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
-          </Search>
+          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
+            {/* <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
@@ -209,8 +212,8 @@ export default function NavBar() {
               <Badge badgeContent={4} color="error">
                 <MailIcon />
               </Badge>
-            </IconButton>
-            <IconButton
+            </IconButton> */}
+            {/* <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
@@ -218,7 +221,7 @@ export default function NavBar() {
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               size="large"
               edge="end"

@@ -1,7 +1,7 @@
 import type { ConversedUser, Message } from "../../types/Chat"
 import { useGetUserQuery, useCreateMessageMutation } from "../../store/apis/apiSlice";
 import io from 'socket.io-client';
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import type { Socket } from "socket.io-client";
 import type { RefObject, MutableRefObject } from "react";
 
@@ -16,10 +16,12 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket 
   // console.log(messages)
   const [messageInput, setMessageInput] = useState('');
   const [createMessage, results] = useCreateMessageMutation();
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const sendMessage = async () => {
     const room = selectUser.conversationId;
     const message = messageInput;
+    setMessageInput('')
 
     if (message.trim() !== '') {
       console.log("Message send")
@@ -32,11 +34,11 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket 
       let res = await createMessage(body);
       if ('data' in res) {
         console.log(res?.data[0]);
-        messages.push(res?.data[0])
+        // messages.push(res?.data[0])
 
       }
-      setMessageInput('')
     }
+    setMessageInput('')
   };
 
   // let curUserMessages=[{}], otherUserMessages=[{}];
@@ -67,6 +69,14 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket 
 
   }
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView()
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages]);
+
   return (
     <div className="messagesPane">
       <div className="chat">
@@ -83,11 +93,8 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket 
           <div className="message stark">Kid, where'd you come from?</div>
           <div className="message parker">Field trip! 🤣</div> */}
           {content}
-          <div className="message stark">
-            <div className="typing typing-1"></div>
-            <div className="typing typing-2"></div>
-            <div className="typing typing-3"></div>
-          </div>
+          <div ref={messagesEndRef} />
+
         </div>
         <div className="input">
           <i className="fas fa-camera"></i>
