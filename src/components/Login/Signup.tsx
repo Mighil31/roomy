@@ -44,7 +44,7 @@ export default function Signup() {
       <div className="login-body">
         <div className="login-left-pane">
           <img src="apartments.jpg" alt="login_image" />
-          <div className="overlay-text">
+          {/* <div className="overlay-text">
             <p>Already Registered?</p>
             <div className="signup-button">
               <Button
@@ -60,18 +60,21 @@ export default function Signup() {
                 Login
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="login-right-pane">
           <div className="login-title">
-            <h4>
-              Welcome to <span>roomy</span>
-            </h4>
+            <span>roomy</span>
             <p>Find your roomate today</p>
           </div>
           <div className="login-form">
             <p>{error}</p>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               <PersonIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
               <input
                 type="text"
@@ -84,6 +87,7 @@ export default function Signup() {
               sx={{
                 display: "flex",
                 alignItems: "center",
+                marginTop: "20px"
                 // border: "1px solid green",
               }}
             >
@@ -93,7 +97,7 @@ export default function Signup() {
                   mr: 1,
                   my: 0.5,
                 }}
-                // size={"medium"}
+              // size={"medium"}
               />
               {/* <TextField
                 id="input-with-sx"
@@ -112,6 +116,7 @@ export default function Signup() {
               sx={{
                 display: "flex",
                 alignItems: "flex-end",
+                marginTop: "20px"
                 // border: "1px solid green",
               }}
             >
@@ -142,6 +147,9 @@ export default function Signup() {
             >
               Sign Up
             </Button>
+          </div>
+          <div className="login__switch">
+            <p>Already have an account? <a href="/login">Login</a></p>
           </div>
         </div>
       </div>

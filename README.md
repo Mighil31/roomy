@@ -28,7 +28,7 @@ Features to be implemented:
 
 Screenshots:
 
-![Alt text](images/image.png)
+![Alt text](images/login.png)
 
 ![Alt text](images/Feed.png)
 

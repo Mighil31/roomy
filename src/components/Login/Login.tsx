@@ -62,9 +62,7 @@ export default function Login() {
         </div>
         <div className="login-right-pane">
           <div className="login-title">
-            <h4>
-              Welcome to <span>roomy</span>
-            </h4>
+            <span>roomy</span>
             <p>Find your roomate today</p>
           </div>
           <div className="login-form">
@@ -73,6 +71,7 @@ export default function Login() {
               sx={{
                 display: "flex",
                 alignItems: "center",
+                marginTop: "10px"
                 // border: "1px solid green",
               }}
             >
@@ -101,6 +100,7 @@ export default function Login() {
               sx={{
                 display: "flex",
                 alignItems: "flex-end",
+                marginTop: "40px"
                 // border: "1px solid green",
               }}
             >
@@ -131,6 +131,9 @@ export default function Login() {
             >
               Login
             </Button>
+          </div>
+          <div className="login__switch">
+            <p>New to roomy? <a href="/signup">Sign Up</a></p>
           </div>
         </div>
       </div>
