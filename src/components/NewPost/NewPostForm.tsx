@@ -15,6 +15,7 @@ import { useNewPostMutation } from "../../store/apis/apiSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useNavigate } from "react-router-dom";
+import { TipTap } from "../Editor/TipTap";
 
 const theme = createTheme();
 
@@ -314,13 +315,13 @@ export default function NewPostForm() {
               <p>Enter body of post</p>
             </div>
             <div className="newPost_editor">
-              <CKEditor
+              {/* <CKEditor
                 editor={ClassicEditor}
                 data=""
-                onReady={(editor) => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log("Editor is ready to use!", editor);
-                }}
+                // onReady={(editor) => {
+                //   // You can store the "editor" and use when it is needed.
+                //   console.log("Editor is ready to use!", editor);
+                // }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
                   setPostBody(editor.getData());
@@ -331,7 +332,8 @@ export default function NewPostForm() {
               // onFocus={(event, editor) => {
               //   console.log("Focus.", editor);
               // }}
-              />
+              /> */}
+              <TipTap content={postBody} editable={true} setContent={setPostBody} />
             </div>
           </div>
           <div className="newPost_submit">

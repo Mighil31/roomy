@@ -17,6 +17,7 @@ import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
 import WcIcon from "@mui/icons-material/Wc";
 import { useNavigate } from "react-router-dom";
+import { TipTap } from "../Editor/TipTap";
 import Markdown from 'react-markdown'
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -94,24 +95,25 @@ export default function PostItem(props: FeedItem) {
         title={props.name}
         subheader={
           props.postDate &&
-          new Date(props?.postDate).toLocaleDateString("en-US", {
-            month: "2-digit",
+          new Date(props?.postDate).toLocaleDateString("en-GB", {
             day: "2-digit",
+            month: "2-digit",
             year: "numeric",
           })
         }
       />
       <CardContent
         sx={{
-          margin: "20px 30px 20px 0px",
+          // margin: "0 30px 0px 0px",
           // border: "1px solid black",
           padding: 0,
           paddingLeft: "30px",
         }}
       >
         {/* <Markdown children={props?.postBody ? props?.postBody : ""} /> */}
-        <Markdown>{props?.postBody ? props?.postBody : ""}</Markdown>
-
+        {/* <Markdown>*React Markdown* doesnt fuckin **work**</Markdown> */}
+        {/* <Markdown>{props?.postBody ? props?.postBody : ""}</Markdown> */}
+        <TipTap content={props?.postBody ? props?.postBody : ""} setContent={null} editable={false} />
       </CardContent>
 
       <div className="post-info">

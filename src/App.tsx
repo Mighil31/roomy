@@ -1,5 +1,6 @@
 import React from "react";
 import NavBar from "./components/NavBar";
+import PlainNavbar from "./components/PlainNavbar";
 import Chat from "./components/Chat/Chat";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Feed from "./components/Feed/Feed";
@@ -11,7 +12,7 @@ import RequireAuth from "./components/Login/RequireAuth";
 function PageWithNavBar() {
   return (
     <>
-      <NavBar />
+      <PlainNavbar />
       <Outlet />
     </>
   );
