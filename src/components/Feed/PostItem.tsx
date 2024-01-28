@@ -18,19 +18,7 @@ import WomanIcon from "@mui/icons-material/Woman";
 import WcIcon from "@mui/icons-material/Wc";
 import { useNavigate } from "react-router-dom";
 import { TipTap } from "../Editor/TipTap";
-import Markdown from 'react-markdown'
-
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import type { Post, FeedItem } from "../../types/Post";
-//need to add ImageLinks if any, no of roomates looking for
-
-// interface ADDRESS {
-//   city: string;
-//   state: string;
-//   country: string;
-//   pincode: string;
-// }
-
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -57,7 +45,11 @@ export default function PostItem(props: FeedItem) {
   };
 
   const routeChange = () => {
-    let path = `/messaging/${props.userId}`;
+    let path;
+    if (props.userId != props.userData.userId)
+      path = `/messaging/${props.userId}`;
+    else
+      path = `/post/${props.postId}`
     navigate(path);
   }
 
@@ -74,23 +66,23 @@ export default function PostItem(props: FeedItem) {
   };
 
   return (
-    <Card sx={{ width: "55%", mb: "2em" }}>
+    <Card sx={{ width: "52%", mb: "20px", pb: "15px" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[300] }} aria-label="recipe">
             {props.name.charAt(0)}
           </Avatar>
         }
-        action={props.userId != props.userData.userId ? (
+        action={(
           <Button
             variant="contained"
             onClick={() => routeChange()}
             style={{
               backgroundColor: "#b197fc",
             }}
-          >
-            Connect
-          </Button>) : null
+          >{props.userId != props.userData.userId ?
+            "Connect" : "Edit"}
+          </Button>)
         }
         title={props.name}
         subheader={
@@ -169,7 +161,7 @@ export default function PostItem(props: FeedItem) {
           </div>
         </div>
       </div>
-      <CardActions disableSpacing>
+      {/* <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
@@ -184,7 +176,7 @@ export default function PostItem(props: FeedItem) {
         >
           <ExpandMoreIcon />
         </ExpandMore>
-      </CardActions>
+      </CardActions> */}
       {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Method:</Typography>

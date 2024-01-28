@@ -66,6 +66,25 @@ export const apiSlice = createApi({
           method: "GET",
         }),
       }),
+      getUserPosts: builder.query({
+        query: (userId) => ({
+          url: `/post?userId=${userId}`,
+          method: "GET",
+        }),
+      }),
+      getPostById: builder.query({
+        query: (postId) => ({
+          url: `/post?postId=${postId}`,
+          method: "GET",
+        }),
+      }),
+      updatePost: builder.mutation({
+        query: ({ postId, postSubmitData: body }) => ({
+          url: `/post/${postId}`,
+          method: "PUT",
+          body: body,
+        }),
+      }),
       newPost: builder.mutation({
         query: (body) => ({
           url: "/post",
@@ -147,4 +166,7 @@ export const {
   useCreateMessageMutation,
   useCreateConversationMutation,
   useGetLastMessageQuery,
+  useGetUserPostsQuery,
+  useGetPostByIdQuery,
+  useUpdatePostMutation,
 } = apiSlice;

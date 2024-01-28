@@ -25,6 +25,7 @@ interface EditorProps {
 
 export function TipTap({ content, setContent, editable }: EditorProps) {
   // const [editable, setEditable] = useState(false);
+  console.log(content)
   const editor = useEditor({
     editable,
     extensions: [
@@ -33,13 +34,13 @@ export function TipTap({ content, setContent, editable }: EditorProps) {
       Paragraph,
       Text,
       Link.configure({
-        openOnClick: false,
+        openOnClick: false
       }),
       Bold,
       Underline,
       Italic,
       Strike,
-      Code,
+      Code
     ],
     content,
     onUpdate({ editor }) {
@@ -123,7 +124,7 @@ export function TipTap({ content, setContent, editable }: EditorProps) {
         </button>
         <button
           className={classNames("menu-button", {
-            "is-active": editor.isActive("link"),
+            "is-active": editor.isActive("link")
           })}
           onClick={openModal}
         >
@@ -131,7 +132,7 @@ export function TipTap({ content, setContent, editable }: EditorProps) {
         </button>
         <button
           className={classNames("menu-button", {
-            "is-active": editor.isActive("bold"),
+            "is-active": editor.isActive("bold")
           })}
           onClick={toggleBold}
         >
@@ -139,7 +140,7 @@ export function TipTap({ content, setContent, editable }: EditorProps) {
         </button>
         <button
           className={classNames("menu-button", {
-            "is-active": editor.isActive("underline"),
+            "is-active": editor.isActive("underline")
           })}
           onClick={toggleUnderline}
         >
@@ -147,7 +148,7 @@ export function TipTap({ content, setContent, editable }: EditorProps) {
         </button>
         <button
           className={classNames("menu-button", {
-            "is-active": editor.isActive("intalic"),
+            "is-active": editor.isActive("intalic")
           })}
           onClick={toggleItalic}
         >
@@ -155,7 +156,7 @@ export function TipTap({ content, setContent, editable }: EditorProps) {
         </button>
         <button
           className={classNames("menu-button", {
-            "is-active": editor.isActive("strike"),
+            "is-active": editor.isActive("strike")
           })}
           onClick={toggleStrike}
         >
@@ -163,7 +164,7 @@ export function TipTap({ content, setContent, editable }: EditorProps) {
         </button>
         <button
           className={classNames("menu-button", {
-            "is-active": editor.isActive("code"),
+            "is-active": editor.isActive("code")
           })}
           onClick={toggleCode}
         >
@@ -176,7 +177,6 @@ export function TipTap({ content, setContent, editable }: EditorProps) {
         tippyOptions={{ duration: 150 }}
         editor={editor}
         shouldShow={({ editor, view, state, oldState, from, to }) => {
-          // only show the bubble menu for links.
           return from === to && editor.isActive("link");
         }}
       >

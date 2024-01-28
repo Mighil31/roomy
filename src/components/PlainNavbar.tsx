@@ -31,8 +31,8 @@ export default function PlainNavbar() {
         {/* <a href="http://stackoverflow.com/users/4084003/" target="_blank">Stackoverflow</a> */}
         {/* <a href="https://in.linkedin.com/in/jonesvinothjoseph" target="_blank">LinkedIn</a> */}
         {/* <a href="https://codepen.io/jo_Geek/" target="_blank">Codepen</a> */}
-        <a href="https://jsfiddle.net/user/jo_Geek/" target="_blank">My Posts</a>
-        <a onClick={(e) => handleLogout(e)} target="_blank">Logout</a>
+        <a href="/myposts">My Posts</a>
+        <a onClick={(e) => handleLogout(e)}>Logout</a>
 
       </div>
     </div>

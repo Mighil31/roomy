@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
 import WcIcon from "@mui/icons-material/Wc";
@@ -11,15 +11,23 @@ import "../../css/newPost.scss";
 import axiosConfig from "../Utils/axiosConfig";
 import { styleConstants } from "../../constants/styleConstants";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useNewPostMutation } from "../../store/apis/apiSlice";
+import { useNewPostMutation, useUpdatePostMutation } from "../../store/apis/apiSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useNavigate } from "react-router-dom";
 import { TipTap } from "../Editor/TipTap";
+import { useGetPostByIdQuery } from "../../store/apis/apiSlice";
+import { useParams } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function NewPostForm() {
+  const { postId } = useParams();
+  const {
+    data: postData,
+    isLoading: isPostDataLoading,
+    isError,
+  } = useGetPostByIdQuery(postId)
   const [gender, setGender] = React.useState("male");
   const [address1, setAddress1] = React.useState("");
   const [address2, setAddress2] = React.useState("");
@@ -32,7 +40,32 @@ export default function NewPostForm() {
   const [houseType, setHouseType] = React.useState("Flat");
   const [rent, setRent] = React.useState("Flat");
   const [postBody, setPostBody] = React.useState<string>("");
+  const [tipTapKey, setTipTapKey] = React.useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    if (postId != null && postData && postData.length > 0) {
+      const post = postData[0];
+      console.log(post)
+      setGender(post.gender);
+      setAddress1(post.address1 || "");
+      setAddress2(post.address2 || "");
+      setCity(post.city || "");
+      setState(post.state || "");
+      setCountry(post.country || "");
+      setPincode(post.pincode || "");
+      setNoOfRoommates(post.noOfRoommates || 1);
+      setSize(post.size || "1bhk");
+      setHouseType(post.houseType || "Flat");
+      setRent(post.rent || "");
+      setPostBody(post.postBody || "");
+      setTipTapKey((prevKey) => prevKey + 1);
+      console.log(postBody)
+    }
+  }, [postId, postData]);
+
 
   const sizes = styleConstants.sizesList.map((item) => (
     <div
@@ -78,9 +111,10 @@ export default function NewPostForm() {
   };
 
   const [addPost, { isLoading }] = useNewPostMutation();
+  const [updatePost, { isLoading: isUpdatePostLoading }] = useUpdatePostMutation();
 
   const onSubmit = async () => {
-    const postData = {
+    const postSubmitData = {
       gender,
       noOfRoommates,
       address1,
@@ -96,8 +130,13 @@ export default function NewPostForm() {
     };
     console.log(postData);
     try {
-      const res = await addPost(postData).unwrap();
-      navigate("/");
+      if (postId != null && postData && postData.length > 0) {
+        console.log(postSubmitData)
+        await updatePost({ postId, postSubmitData })
+      } else {
+        await addPost(postSubmitData).unwrap();
+      }
+      // navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -333,7 +372,7 @@ export default function NewPostForm() {
               //   console.log("Focus.", editor);
               // }}
               /> */}
-              <TipTap content={postBody} editable={true} setContent={setPostBody} />
+              <TipTap key={tipTapKey} content={postBody} editable={true} setContent={setPostBody} />
             </div>
           </div>
           <div className="newPost_submit">
@@ -344,7 +383,7 @@ export default function NewPostForm() {
                 backgroundColor: "#b197fc",
               }}
             >
-              Create Post
+              {postData?.length > 0 ? "Edit Post" : "Create Post"}
             </Button>
           </div>
         </div>

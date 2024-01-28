@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Feed from "./components/Feed/Feed";
 import Login from "./components/Login/Login";
 import Signup from "./components/Login/Signup";
+import MyPosts from "./components/MyPosts/MyPosts";
 import NewPostForm from "./components/NewPost/NewPostForm";
 import RequireAuth from "./components/Login/RequireAuth";
 
@@ -26,7 +27,9 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Feed />} />
             <Route path="/messaging/:userId?" element={<Chat />} />
-            <Route path="/newPost" element={<NewPostForm />} />
+            <Route path="/post/:postId?" element={<NewPostForm />} />
+            <Route path="/myposts" element={<MyPosts />} />
+
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />
