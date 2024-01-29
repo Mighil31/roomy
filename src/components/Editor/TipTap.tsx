@@ -25,7 +25,6 @@ interface EditorProps {
 
 export function TipTap({ content, setContent, editable }: EditorProps) {
   // const [editable, setEditable] = useState(false);
-  console.log(content)
   const editor = useEditor({
     editable,
     extensions: [

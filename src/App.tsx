@@ -7,7 +7,7 @@ import Feed from "./components/Feed/Feed";
 import Login from "./components/Login/Login";
 import Signup from "./components/Login/Signup";
 import MyPosts from "./components/MyPosts/MyPosts";
-import NewPostForm from "./components/NewPost/NewPostForm";
+import PostPage from "./components/NewPost/PostPage";
 import RequireAuth from "./components/Login/RequireAuth";
 
 function PageWithNavBar() {
@@ -27,7 +27,7 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Feed />} />
             <Route path="/messaging/:userId?" element={<Chat />} />
-            <Route path="/post/:postId?" element={<NewPostForm />} />
+            <Route path="/post/:postId?" element={<PostPage />} />
             <Route path="/myposts" element={<MyPosts />} />
 
           </Route>

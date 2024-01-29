@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Container from "@mui/material/Container";
-import { styleConstants } from "../../constants/styleConstants";
+import { constants } from "../../constants/constants";
 import "../../css/chat.scss";
 import List from "@mui/material/List";
 import {
@@ -100,7 +100,7 @@ export default function Chat() {
   return (
     <>
       <Container
-        sx={{ bgcolor: styleConstants.bg_color, minHeight: "94vh", pt: "2em" }}
+        sx={{ bgcolor: constants.bg_color, minHeight: "94vh", pt: "2em" }}
         maxWidth={false}
         disableGutters
       >

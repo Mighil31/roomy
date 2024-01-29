@@ -16,7 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import "../css/index.css";
-import { styleConstants } from "../constants/styleConstants";
+import { constants } from "../constants/constants";
 import { logOut } from "../store/slices/authSlice";
 import { useDispatch } from "react-redux";
 
@@ -173,7 +173,7 @@ export default function NavBar() {
     <Box sx={{ flexGrow: 1, bgcolor: "red", maxHeight: "5vh" }}>
       <AppBar
         position="static"
-        sx={{ bgcolor: styleConstants.navBar_color }}
+        sx={{ bgcolor: constants.navBar_color }}
       >
         <Toolbar>
           {/* <IconButton

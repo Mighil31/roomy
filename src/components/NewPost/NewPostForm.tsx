@@ -6,10 +6,11 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import CssBaseline from "@mui/material/CssBaseline";
 import Button from "@mui/material/Button";
+import Error from "../Error/Error";
 import Container from "@mui/material/Container";
 import "../../css/newPost.scss";
 import axiosConfig from "../Utils/axiosConfig";
-import { styleConstants } from "../../constants/styleConstants";
+import { constants } from "../../constants/constants";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNewPostMutation, useUpdatePostMutation } from "../../store/apis/apiSlice";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -19,36 +20,39 @@ import { TipTap } from "../Editor/TipTap";
 import { useGetPostByIdQuery } from "../../store/apis/apiSlice";
 import { useParams } from "react-router-dom";
 
-const theme = createTheme();
+interface NewPostFormProps {
+  error: number,
+  postId: string | undefined;
+  setError: React.Dispatch<React.SetStateAction<number>>;
+}
 
-export default function NewPostForm() {
-  const { postId } = useParams();
+export default function NewPostForm({ error, postId, setError }: NewPostFormProps) {
   const {
     data: postData,
     isLoading: isPostDataLoading,
     isError,
   } = useGetPostByIdQuery(postId)
-  const [gender, setGender] = React.useState("male");
-  const [address1, setAddress1] = React.useState("");
-  const [address2, setAddress2] = React.useState("");
-  const [city, setCity] = React.useState("");
-  const [state, setState] = React.useState("");
-  const [country, setCountry] = React.useState("");
-  const [pincode, setPincode] = React.useState("");
-  const [noOfRoommates, setNoOfRoommates] = React.useState(1);
-  const [size, setSize] = React.useState("1bhk");
-  const [houseType, setHouseType] = React.useState("Flat");
-  const [rent, setRent] = React.useState("Flat");
-  const [postBody, setPostBody] = React.useState<string>("");
-  const [tipTapKey, setTipTapKey] = React.useState(0);
+  const [gender, setGender] = useState("male");
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [noOfRoommates, setNoOfRoommates] = useState(1);
+  const [size, setSize] = useState("1bhk");
+  const [houseType, setHouseType] = useState("Flat");
+  const [rent, setRent] = useState("Flat");
+  const [postBody, setPostBody] = useState<string>("");
+  const [tipTapKey, setTipTapKey] = useState(0);
+  // const [error, setError] = useState(0)
   const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     if (postId != null && postData && postData.length > 0) {
       const post = postData[0];
-      console.log(post)
+      // console.log(post)
       setGender(post.gender);
       setAddress1(post.address1 || "");
       setAddress2(post.address2 || "");
@@ -62,12 +66,14 @@ export default function NewPostForm() {
       setRent(post.rent || "");
       setPostBody(post.postBody || "");
       setTipTapKey((prevKey) => prevKey + 1);
-      console.log(postBody)
     }
-  }, [postId, postData]);
+    else if (postId != null) {
+      setError(400)
+    }
+  }, [postData, isPostDataLoading]);
 
 
-  const sizes = styleConstants.sizesList.map((item) => (
+  const sizes = constants.sizesList.map((item) => (
     <div
       className={size === item.value ? "newPost_size selected" : "newPost_size"}
       onClick={() => handleInput(setSize, item.value)}
@@ -77,7 +83,7 @@ export default function NewPostForm() {
     </div>
   ));
 
-  const houseTypes = styleConstants.houseList.map((item) => (
+  const houseTypes = constants.houseList.map((item) => (
     <div
       className={houseType === item ? "newPost_size selected" : "newPost_size"}
       onClick={() => handleHouseType(item)}
@@ -130,14 +136,20 @@ export default function NewPostForm() {
     };
     console.log(postData);
     try {
+      let res;
       if (postId != null && postData && postData.length > 0) {
         console.log(postSubmitData)
-        await updatePost({ postId, postSubmitData })
+        res = await updatePost({ postId, postSubmitData })
       } else {
-        await addPost(postSubmitData).unwrap();
+        res = await addPost(postSubmitData).unwrap();
       }
-      // navigate("/");
+      console.log(res)
+      if (res.error?.data.length > 0) {
+        setError(500);
+      } else
+        navigate("/");
     } catch (error) {
+      console.log("ERRROR")
       console.error(error);
     }
   };
@@ -147,7 +159,7 @@ export default function NewPostForm() {
       <CssBaseline />
       <Container
         sx={{
-          bgcolor: styleConstants.bg_color,
+          bgcolor: constants.bg_color,
           pt: "2em",
           // border: "1px solid red",
           minHeight: "95vh",

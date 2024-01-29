@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import { styleConstants } from "../../constants/styleConstants";
+import { constants } from "../../constants/constants";
 import PostItem from "./PostItem";
 import Box from "@mui/material/Box";
 import axiosConfig from "../Utils/axiosConfig";
@@ -17,7 +17,7 @@ export default function FeedPosts({ postData, userData }) {
       <CssBaseline />
       <Container
         sx={{
-          bgcolor: styleConstants.bg_color,
+          bgcolor: constants.bg_color,
           pt: "2em",
           minHeight: "95vh",
         }}
