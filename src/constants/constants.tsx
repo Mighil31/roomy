@@ -1,6 +1,9 @@
 export const constants = {
-  navBar_color: "#00b894",
+  navBar_color: "#2e3b55",
   bg_color: "#f8f9fa",
+  item_color: "#ebfbee",
+  highlight_color: "#2e3b55",
+  button_color: "#6c3910",
   sizesList: [{ "type": "1 BHK", "value": "1bhk" },
   { "type": "2 BHK", "value": "2bhk" },
   { "type": "3 BHK", "value": "3bhk" },

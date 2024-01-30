@@ -35,8 +35,8 @@ export default function Feed() {
 
   let content;
   if (error) content = <Error status={error} />;
-  else if (isLoading) content = <Loading />;
-  else content = <FeedPosts userData={userData} postData={data} />;
+  else if (isUserLoading || isLoading) content = <Loading />;
+  content = <FeedPosts userData={userData} postData={data} />;
 
   return <>{content}</>;
 }

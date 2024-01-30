@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&family=Roboto:wght@400;500;700&display=swap");
-$highlight-color: #b197fc;
+$highlight-color: #2e3b55;
 $item-color: #ebfbee;
+$navBar_color: #845ef7;
 
 .newPost_form {
   width: 65%;
@@ -138,6 +139,7 @@ $item-color: #ebfbee;
 
 .selected_gender {
   background-color: $highlight-color;
+  color: white;
 }
 
 .newPost_size {

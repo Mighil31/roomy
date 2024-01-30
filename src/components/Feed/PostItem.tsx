@@ -19,6 +19,7 @@ import WcIcon from "@mui/icons-material/Wc";
 import { useNavigate } from "react-router-dom";
 import { TipTap } from "../Editor/TipTap";
 import type { Post, FeedItem } from "../../types/Post";
+import { constants } from "../../constants/constants";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -78,7 +79,7 @@ export default function PostItem(props: FeedItem) {
             variant="contained"
             onClick={() => routeChange()}
             style={{
-              backgroundColor: "#b197fc",
+              backgroundColor: constants.button_color,
             }}
           >{props.userId != props.userData.userId ?
             "Connect" : "Edit"}
@@ -102,9 +103,6 @@ export default function PostItem(props: FeedItem) {
           paddingLeft: "30px",
         }}
       >
-        {/* <Markdown children={props?.postBody ? props?.postBody : ""} /> */}
-        {/* <Markdown>*React Markdown* doesnt fuckin **work**</Markdown> */}
-        {/* <Markdown>{props?.postBody ? props?.postBody : ""}</Markdown> */}
         <TipTap content={props?.postBody ? props?.postBody : ""} setContent={null} editable={false} />
       </CardContent>
 

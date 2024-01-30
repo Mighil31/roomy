@@ -13,7 +13,7 @@ import RequireAuth from "./components/Login/RequireAuth";
 function PageWithNavBar() {
   return (
     <>
-      <PlainNavbar />
+      <NavBar />
       <Outlet />
     </>
   );
