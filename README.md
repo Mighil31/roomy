@@ -17,12 +17,12 @@ Features already implemented:
 - Create posts
 - View all posts in a feed
 - Message users using web sockets
+- Allow users to see their own posts and edit
+- Render markdown in feed
 
 Features to be implemented:
 
-- Allow users to see their own posts and edit
 - Make pages responsive (currently mobile devices are not supported)
-- ~~Render markdown in feed~~
 - Allow users to upload photos
 - Add comments to posts
 - Search post content
