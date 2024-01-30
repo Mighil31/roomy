@@ -12,6 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   p {
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -44,12 +45,13 @@
   p {
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-    // position: absolute;
-    // left: 50%;
+    position: absolute;
+    left: 50%;
     margin: 0;
     padding: 0;
-    // transform: translate(-50%, -50%);
-    font-size: 3em;
+    // border: 1px solid red;
+    transform: translate(-50%, -20%);
+    font-size: 4.5em;
     color: #fa5252;
   }
   img {
@@ -63,6 +65,10 @@
   /* For desktop: */
   .error-image {
     width: 40%;
+    p {
+      // border: 1px solid red;
+      transform: translate(-50%, 20%);
+    }
   }
 }
 
@@ -83,4 +89,20 @@
 }
 .contant_box_404 {
   margin-top: -50px;
+}
+
+.loader {
+  margin: 0;
+  padding: 0;
+  // border: 1px solid green;
+  // width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  // position: relative;
+  // top: 50%;
+  // -webkit-transform: translateY(-50%);
+  // -ms-transform: translateY(-50%);
+  // transform: translateY(-50%);
 }

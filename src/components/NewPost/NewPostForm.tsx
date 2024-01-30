@@ -11,13 +11,11 @@ import Container from "@mui/material/Container";
 import "../../css/newPost.scss";
 import axiosConfig from "../Utils/axiosConfig";
 import { constants } from "../../constants/constants";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNewPostMutation, useUpdatePostMutation } from "../../store/apis/apiSlice";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useNavigate } from "react-router-dom";
 import { TipTap } from "../Editor/TipTap";
 import { useGetPostByIdQuery } from "../../store/apis/apiSlice";
+import CustomContainer from "../Utils/CustomContainer";
 import { useParams } from "react-router-dom";
 
 interface NewPostFormProps {
@@ -144,7 +142,7 @@ export default function NewPostForm({ error, postId, setError }: NewPostFormProp
         res = await addPost(postSubmitData).unwrap();
       }
       console.log(res)
-      if (res.error?.data.length > 0) {
+      if (res.error) {
         setError(500);
       } else
         navigate("/");
@@ -155,24 +153,12 @@ export default function NewPostForm({ error, postId, setError }: NewPostFormProp
   };
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container
-        sx={{
-          bgcolor: constants.bg_color,
-          pt: "2em",
-          // border: "1px solid red",
-          minHeight: "95vh",
-          // display: "flex",
-        }}
-        maxWidth={false}
-        disableGutters
-      >
-        <div className="newPost_header">
-          <h1>Find a roomie</h1>
-        </div>
-        <div className="newPost_form">
-          {/* <FormControl sx={{ width: "60%" }}>
+    <CustomContainer>
+      <div className="newPost_header">
+        <h1>Find a roomie</h1>
+      </div>
+      <div className="newPost_form">
+        {/* <FormControl sx={{ width: "60%" }}>
             <InputLabel id="demo-simple-select-label">
               Room mate gender
             </InputLabel>
@@ -188,185 +174,185 @@ export default function NewPostForm({ error, postId, setError }: NewPostFormProp
               <MenuItem value={"Either"}>Either</MenuItem>
             </Select>
           </FormControl> */}
-          <div className="newPost_row">
-            <div className="newPost_col">
-              <div className="newPost_label">
-                <p>Select Your Roommate Preference</p>
-              </div>
-              <div className="newPost_input">
-                <div
-                  className={
-                    gender === "female"
-                      ? "gender_icon selected_gender"
-                      : "gender_icon"
-                  }
-                  onClick={() => handleGender("female")}
-                >
-                  <WomanIcon fontSize="large" />
-                </div>
-                <div
-                  className={
-                    gender === "male"
-                      ? "gender_icon selected_gender"
-                      : "gender_icon"
-                  }
-                  onClick={() => handleGender("male")}
-                >
-                  <ManIcon fontSize="large" />
-                </div>
-                <div
-                  className={
-                    gender === "any"
-                      ? "gender_icon selected_gender"
-                      : "gender_icon"
-                  }
-                  onClick={() => handleGender("any")}
-                >
-                  <WcIcon fontSize="large" />
-                </div>
-              </div>
-            </div>
-            <div className="newPost_col">
-              <div className="newPost_label">
-                <p>Number of roommates required</p>
-              </div>
-              <div className="newPost_input">
-                <div className="input-number">
-                  <button
-                    type="button"
-                    onClick={() => handleNoOfRoommates("-")}
-                  >
-                    &minus;
-                  </button>
-                  <span>{noOfRoommates}</span>
-                  <button
-                    type="button"
-                    onClick={() => handleNoOfRoommates("+")}
-                  >
-                    &#43;
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="newPost_row">
-            <div className="newPost_address">
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    id="address1"
-                    name="address1"
-                    label="Address line 1"
-                    fullWidth
-                    autoComplete="shipping address-line1"
-                    variant="standard"
-                    value={address1}
-                    onChange={(e) => handleInput(setAddress1, e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="address2"
-                    name="address2"
-                    label="Address line 2"
-                    fullWidth
-                    autoComplete="shipping address-line2"
-                    variant="standard"
-                    value={address2}
-                    onChange={(e) => handleInput(setAddress2, e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="city"
-                    name="city"
-                    label="City"
-                    fullWidth
-                    autoComplete="shipping address-level2"
-                    variant="standard"
-                    value={city}
-                    onChange={(e) => handleInput(setCity, e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="state"
-                    name="state"
-                    label="State/Province/Region"
-                    fullWidth
-                    variant="standard"
-                    value={state}
-                    onChange={(e) => handleInput(setState, e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="zip"
-                    name="zip"
-                    label="Zip / Postal code"
-                    fullWidth
-                    autoComplete="shipping postal-code"
-                    variant="standard"
-                    value={pincode}
-                    onChange={(e) => handleInput(setPincode, e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="country"
-                    name="country"
-                    label="Country"
-                    fullWidth
-                    autoComplete="shipping country"
-                    variant="standard"
-                    value={country}
-                    onChange={(e) => handleInput(setCountry, e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-            </div>
-          </div>
-          <div className="newPost_row">
-            <div className="newPost_col">
-              <div className="newPost_label">
-                <p>House Size</p>
-              </div>
-              <div className="newPost_input">{sizes}</div>
-            </div>
-            <div className="newPost_col">
-              <div className="newPost_label">
-                <p>Rent</p>
-              </div>
-              <Grid container spacing={2}>
-                <Grid item xs={8} sm={12}>
-                  <TextField
-                    required
-                    id="rent"
-                    name="rent"
-                    label="rent"
-                    fullWidth
-                    type="number"
-                    autoComplete="shipping address-level2"
-                    value={rent}
-                    onChange={(e) => handleInput(setRent, e.target.value)}
-                    variant="standard"
-                  />
-                </Grid>
-              </Grid>
-            </div>
-          </div>
-
-          <div className="newPost_markdown">
+        <div className="newPost_row">
+          <div className="newPost_col">
             <div className="newPost_label">
-              <p>Enter body of post</p>
+              <p>Select Your Roommate Preference</p>
             </div>
-            <div className="newPost_editor">
-              {/* <CKEditor
+            <div className="newPost_input">
+              <div
+                className={
+                  gender === "female"
+                    ? "gender_icon selected_gender"
+                    : "gender_icon"
+                }
+                onClick={() => handleGender("female")}
+              >
+                <WomanIcon fontSize="large" />
+              </div>
+              <div
+                className={
+                  gender === "male"
+                    ? "gender_icon selected_gender"
+                    : "gender_icon"
+                }
+                onClick={() => handleGender("male")}
+              >
+                <ManIcon fontSize="large" />
+              </div>
+              <div
+                className={
+                  gender === "any"
+                    ? "gender_icon selected_gender"
+                    : "gender_icon"
+                }
+                onClick={() => handleGender("any")}
+              >
+                <WcIcon fontSize="large" />
+              </div>
+            </div>
+          </div>
+          <div className="newPost_col">
+            <div className="newPost_label">
+              <p>Number of roommates required</p>
+            </div>
+            <div className="newPost_input">
+              <div className="input-number">
+                <button
+                  type="button"
+                  onClick={() => handleNoOfRoommates("-")}
+                >
+                  &minus;
+                </button>
+                <span>{noOfRoommates}</span>
+                <button
+                  type="button"
+                  onClick={() => handleNoOfRoommates("+")}
+                >
+                  &#43;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="newPost_row">
+          <div className="newPost_address">
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="address1"
+                  name="address1"
+                  label="Address line 1"
+                  fullWidth
+                  autoComplete="shipping address-line1"
+                  variant="standard"
+                  value={address1}
+                  onChange={(e) => handleInput(setAddress1, e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="address2"
+                  name="address2"
+                  label="Address line 2"
+                  fullWidth
+                  autoComplete="shipping address-line2"
+                  variant="standard"
+                  value={address2}
+                  onChange={(e) => handleInput(setAddress2, e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="city"
+                  name="city"
+                  label="City"
+                  fullWidth
+                  autoComplete="shipping address-level2"
+                  variant="standard"
+                  value={city}
+                  onChange={(e) => handleInput(setCity, e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="state"
+                  name="state"
+                  label="State/Province/Region"
+                  fullWidth
+                  variant="standard"
+                  value={state}
+                  onChange={(e) => handleInput(setState, e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="zip"
+                  name="zip"
+                  label="Zip / Postal code"
+                  fullWidth
+                  autoComplete="shipping postal-code"
+                  variant="standard"
+                  value={pincode}
+                  onChange={(e) => handleInput(setPincode, e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="country"
+                  name="country"
+                  label="Country"
+                  fullWidth
+                  autoComplete="shipping country"
+                  variant="standard"
+                  value={country}
+                  onChange={(e) => handleInput(setCountry, e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+        <div className="newPost_row">
+          <div className="newPost_col">
+            <div className="newPost_label">
+              <p>House Size</p>
+            </div>
+            <div className="newPost_input">{sizes}</div>
+          </div>
+          <div className="newPost_col">
+            <div className="newPost_label">
+              <p>Rent</p>
+            </div>
+            <Grid container spacing={2}>
+              <Grid item xs={8} sm={12}>
+                <TextField
+                  required
+                  id="rent"
+                  name="rent"
+                  label="rent"
+                  fullWidth
+                  type="number"
+                  autoComplete="shipping address-level2"
+                  value={rent}
+                  onChange={(e) => handleInput(setRent, e.target.value)}
+                  variant="standard"
+                />
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+
+        <div className="newPost_markdown">
+          <div className="newPost_label">
+            <p>Enter body of post</p>
+          </div>
+          <div className="newPost_editor">
+            {/* <CKEditor
                 editor={ClassicEditor}
                 data=""
                 // onReady={(editor) => {
@@ -384,22 +370,21 @@ export default function NewPostForm({ error, postId, setError }: NewPostFormProp
               //   console.log("Focus.", editor);
               // }}
               /> */}
-              <TipTap key={tipTapKey} content={postBody} editable={true} setContent={setPostBody} />
-            </div>
-          </div>
-          <div className="newPost_submit">
-            <Button
-              variant="contained"
-              onClick={() => onSubmit()}
-              style={{
-                backgroundColor: "#b197fc",
-              }}
-            >
-              {postData?.length > 0 ? "Edit Post" : "Create Post"}
-            </Button>
+            <TipTap key={tipTapKey} content={postBody} editable={true} setContent={setPostBody} />
           </div>
         </div>
-      </Container>
-    </React.Fragment>
+        <div className="newPost_submit">
+          <Button
+            variant="contained"
+            onClick={() => onSubmit()}
+            style={{
+              backgroundColor: "#b197fc",
+            }}
+          >
+            {postData?.length > 0 ? "Edit Post" : "Create Post"}
+          </Button>
+        </div>
+      </div>
+    </CustomContainer>
   );
 }

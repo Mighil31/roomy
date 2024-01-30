@@ -17,7 +17,7 @@ function Error({ status }: ErrorProps) {
     <section className="page_404">
       <div className="error-container">
         <div className='error-image'>
-          {/* {status && <p>{status}</p>} */}
+          {status && <p>{status}</p>}
           <img src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif" />
         </div>
         {/* <div className="col-sm-10 col-sm-offset-1  text-center">

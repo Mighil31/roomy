@@ -7,12 +7,14 @@ import Box from "@mui/material/Box";
 import axiosConfig from "../Utils/axiosConfig";
 import "../../css/feed.scss";
 import { useGetPostsQuery, useLoadUserQuery } from "../../store/apis/apiSlice";
-import { useDispatch } from "react-redux";
-import { setPosts } from "../../store/slices/postSlice";
 import FeedPosts from "./FeedPosts";
+import Error from "../Error/Error";
+import Loading from "../Utils/Loading";
 // import type { FeedItem, Post } from "../../types/Post";
 
 export default function Feed() {
+  const [error, setError] = useState(0);
+
   const {
     data: userData,
     isLoading: isUserLoading,
@@ -31,5 +33,10 @@ export default function Feed() {
     // refetchPosts();
   }, [userData, refetchUserData]);
 
-  return <FeedPosts userData={userData} postData={data} />;
+  let content;
+  if (error) content = <Error status={error} />;
+  else if (isLoading) content = <Loading />;
+  else content = <FeedPosts userData={userData} postData={data} />;
+
+  return <>{content}</>;
 }

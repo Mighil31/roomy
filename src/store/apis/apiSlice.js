@@ -37,7 +37,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Messages", "Conversation", "LastMessage"],
+  tagTypes: ["Messages", "Conversation", "LastMessage", "Post"],
   endpoints: (builder) => {
     return {
       signup: builder.mutation({
@@ -61,6 +61,9 @@ export const apiSlice = createApi({
         }),
       }),
       getPosts: builder.query({
+        providesTags: (result, error) => {
+          return ["Posts"];
+        },
         query: () => ({
           url: "/post",
           method: "GET",
@@ -73,10 +76,16 @@ export const apiSlice = createApi({
         }),
       }),
       getPostById: builder.query({
-        query: (postId) => ({
-          url: `/post?postId=${postId}`,
-          method: "GET",
-        }),
+        providesTags: (result, error, conversationId) => {
+          return ["Posts"];
+        },
+        query: (postId) => {
+          const queryParams = postId ? `/post?postId=${postId}` : "/post";
+          return {
+            url: queryParams,
+            method: "GET",
+          };
+        },
       }),
       updatePost: builder.mutation({
         query: ({ postId, postSubmitData: body }) => ({
@@ -84,6 +93,9 @@ export const apiSlice = createApi({
           method: "PUT",
           body: body,
         }),
+        invalidatesTags: (result, error, data) => {
+          return ["Posts"];
+        },
       }),
       newPost: builder.mutation({
         query: (body) => ({
@@ -91,6 +103,9 @@ export const apiSlice = createApi({
           method: "POST",
           body: body,
         }),
+        invalidatesTags: (result, error, data) => {
+          return ["Posts"];
+        },
       }),
       loadUser: builder.query({
         query: () => ({

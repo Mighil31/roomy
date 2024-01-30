@@ -6,40 +6,27 @@ import PostItem from "./PostItem";
 import Box from "@mui/material/Box";
 import axiosConfig from "../Utils/axiosConfig";
 import "../../css/feed.scss";
-import { useGetPostsQuery, useLoadUserQuery } from "../../store/apis/apiSlice";
-import { useDispatch } from "react-redux";
-import { setPosts } from "../../store/slices/postSlice";
+import CustomContainer from "../Utils/CustomContainer";
 // import type { FeedItem, Post } from "../../types/Post";
 
 export default function FeedPosts({ postData, userData }) {
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container
+    <CustomContainer>
+      {/* <Container sx={{ bgcolor: "#FFFFFF", pt: "2em" }}> */}
+      <Box
         sx={{
-          bgcolor: constants.bg_color,
-          pt: "2em",
-          minHeight: "95vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
         }}
-        maxWidth={false}
-        disableGutters
       >
-        {/* <Container sx={{ bgcolor: "#FFFFFF", pt: "2em" }}> */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
-          {postData &&
-            postData.map((v) => (
-              <PostItem key={v.postId} {...v} userData={userData} />
-            ))}
-        </Box>
-        {/* </Container> */}
-      </Container>
-    </React.Fragment>
+        {postData &&
+          postData.map((v) => (
+            <PostItem key={v.postId} {...v} userData={userData} />
+          ))}
+      </Box>
+      {/* </Container> */}
+    </CustomContainer>
   );
 }

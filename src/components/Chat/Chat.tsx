@@ -15,6 +15,7 @@ import type { ConversedUser, Message } from "../../types/Chat";
 import MessagePane from "./MessagePane";
 import io from 'socket.io-client';
 import { Socket } from "socket.io-client";
+import CustomContainer from "../Utils/CustomContainer";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -98,22 +99,16 @@ export default function Chat() {
   }
 
   return (
-    <>
-      <Container
-        sx={{ bgcolor: constants.bg_color, minHeight: "94vh", pt: "2em" }}
-        maxWidth={false}
-        disableGutters
-      >
-        <div className="chatPane">
-          <div className="contactNames">
-            <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-              {conversationItems}
-            </List>
-          </div>
-          <MessagePane selectUser={selectedUser} messages={messages} socket={socket} />
+    <CustomContainer>
+      <div className="chatPane">
+        <div className="contactNames">
+          <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+            {conversationItems}
+          </List>
         </div>
-      </Container>
-    </>
+        <MessagePane selectUser={selectedUser} messages={messages} socket={socket} />
+      </div>
+    </CustomContainer>
   );
 }
 
