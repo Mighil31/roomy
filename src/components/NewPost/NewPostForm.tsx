@@ -378,7 +378,7 @@ export default function NewPostForm({ error, postId, setError }: NewPostFormProp
             variant="contained"
             onClick={() => onSubmit()}
             style={{
-              backgroundColor: "#b197fc",
+              backgroundColor: constants.button_color,
             }}
           >
             {postData?.length > 0 ? "Edit Post" : "Create Post"}

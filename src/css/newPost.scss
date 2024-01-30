@@ -2,6 +2,7 @@
 $highlight-color: #2e3b55;
 $item-color: #ebfbee;
 $navBar_color: #845ef7;
+$selected_color: white;
 
 .newPost_form {
   width: 65%;
@@ -139,7 +140,7 @@ $navBar_color: #845ef7;
 
 .selected_gender {
   background-color: $highlight-color;
-  color: white;
+  color: $selected_color;
 }
 
 .newPost_size {
@@ -151,7 +152,7 @@ $navBar_color: #845ef7;
 
 .selected {
   background-color: $highlight-color;
-  color: #f8f9fa;
+  color: $selected_color;
 }
 
 .input-number {
