@@ -33,5 +33,5 @@ export default function MyPosts() {
     // refetchPosts();
   }, [userData, refetchUserData]);
 
-  return <FeedPosts userData={userData} postData={data} />;
+  return <FeedPosts userData={userData} postData={data} type="myposts" />;
 }

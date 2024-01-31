@@ -116,7 +116,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My Posts</MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link href='/myposts' underline="none" color="black">My Posts</Link></MenuItem>
       <MenuItem onClick={(e) => handleLogout(e)}>Logout</MenuItem>
     </Menu>
   );
@@ -138,7 +138,7 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My Posts</MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link href='/myposts' underline="none" color="black">My Posts</Link></MenuItem>
       <MenuItem onClick={(e) => handleLogout(e)}>Logout</MenuItem>
     </Menu>
   );

@@ -70,6 +70,9 @@ export const apiSlice = createApi({
         }),
       }),
       getUserPosts: builder.query({
+        providesTags: (result, error) => {
+          return ["Posts"];
+        },
         query: (userId) => ({
           url: `/post?userId=${userId}`,
           method: "GET",
@@ -94,6 +97,16 @@ export const apiSlice = createApi({
           body: body,
         }),
         invalidatesTags: (result, error, data) => {
+          return ["Posts"];
+        },
+      }),
+      deletePost: builder.mutation({
+        query: (postId) => ({
+          url: `/post/${postId}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: (result, error, data) => {
+          console.log("werwerw");
           return ["Posts"];
         },
       }),
@@ -184,4 +197,5 @@ export const {
   useGetUserPostsQuery,
   useGetPostByIdQuery,
   useUpdatePostMutation,
+  useDeletePostMutation,
 } = apiSlice;

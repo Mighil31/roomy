@@ -26,4 +26,5 @@ export interface FeedItem extends Post {
   name: string;
   postDate: Date;
   userData: USER;
+  type: string;
 }

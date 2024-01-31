@@ -9,7 +9,7 @@ import "../../css/feed.scss";
 import CustomContainer from "../Utils/CustomContainer";
 // import type { FeedItem, Post } from "../../types/Post";
 
-export default function FeedPosts({ postData, userData }) {
+export default function FeedPosts({ postData, userData, type }) {
   return (
     <CustomContainer>
       {/* <Container sx={{ bgcolor: "#FFFFFF", pt: "2em" }}> */}
@@ -23,7 +23,7 @@ export default function FeedPosts({ postData, userData }) {
       >
         {postData &&
           postData.map((v) => (
-            <PostItem key={v.postId} {...v} userData={userData} />
+            <PostItem key={v.postId} {...v} userData={userData} type={type} />
           ))}
       </Box>
       {/* </Container> */}
