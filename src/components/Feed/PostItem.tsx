@@ -70,12 +70,12 @@ export default function PostItem(props: FeedItem) {
     <>
       <Button
         variant="contained"
-        onClick={() => routeChange(props.userId !== props.userData.userId ? "Connect" : "Edit")}
+        onClick={() => routeChange(props.userId !== props.userData?.userId ? "Connect" : "Edit")}
         style={{
           backgroundColor: constants.button_color,
         }}
       >
-        {props.userId !== props.userData.userId ? "Connect" : "Edit"}
+        {props.userId !== props.userData?.userId ? "Connect" : "Edit"}
       </Button>
       {props.type === "myposts" && (
         <Button

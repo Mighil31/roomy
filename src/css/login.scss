@@ -112,7 +112,7 @@
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
     border: 0;
     outline: 0;
-    width: 60%;
+    width: 75%;
     border-radius: 3px;
     font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Helvetica,
       Arial, sans-serif;
@@ -153,5 +153,50 @@
       text-decoration: underline;
       cursor: pointer;
     }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  /* For mobile: */
+  .login-body {
+    width: 90%;
+    flex-direction: column;
+    // border: 1px solid red;
+  }
+
+  .login-left-pane {
+    width: 100%;
+    // border: 1px solid blue;
+    height: 10%;
+  }
+
+  .login-left-pane img {
+    object-fit: none;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .login-right-pane {
+    background-color: #f8f9fa;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding: 1em;
+    padding-left: 3em;
+    padding-top: 3em;
+    padding-right: 3em;
+  }
+
+  .login-button {
+    //   border: 1px solid red;
+    margin-top: 30px;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  /* For desktop: */
+  .login-body {
+    width: 80%;
   }
 }

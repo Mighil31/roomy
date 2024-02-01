@@ -15,9 +15,9 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  console.log("base query with re auth - refreshing token");
   // console.log(result);
   if (result?.error?.status === 401) {
+    console.log("base query with re auth - refreshing token");
     // console.log("sending request token");
     const refreshResult = await baseQuery("/refresh", api, extraOptions);
     // console.log(refreshResult);
@@ -83,9 +83,11 @@ export const apiSlice = createApi({
           return ["Posts"];
         },
         query: (postId) => {
-          const queryParams = postId ? `/post?postId=${postId}` : "/post";
+          const queryParams = postId
+            ? `/post?postId=${postId}`
+            : `/post?postId=${null}`;
           return {
-            url: queryParams,
+            url: `/post?postId=${postId}`,
             method: "GET",
           };
         },

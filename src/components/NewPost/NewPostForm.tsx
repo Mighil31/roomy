@@ -29,7 +29,7 @@ export default function NewPostForm({ error, postId, setError }: NewPostFormProp
     data: postData,
     isLoading: isPostDataLoading,
     isError,
-  } = useGetPostByIdQuery(postId)
+  } = useGetPostByIdQuery(postId ? postId : null)
   const [gender, setGender] = useState("male");
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
@@ -70,7 +70,7 @@ export default function NewPostForm({ error, postId, setError }: NewPostFormProp
     }
   }, [postData, isPostDataLoading]);
 
-
+  console.log(postData)
   const sizes = constants.sizesList.map((item) => (
     <div
       className={size === item.value ? "newPost_size selected" : "newPost_size"}
