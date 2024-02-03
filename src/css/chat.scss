@@ -44,6 +44,14 @@ $background: #f7f7f7;
   background-size: cover;
   background-position: center;
   border-radius: 50%;
+  // text-align: center;
+  // border: 1px solid red;
+  // border: 1px solid red;
+  padding: 0;
+  overflow: hidden;
+  img {
+    object-fit: contain;
+  }
 }
 
 .contact {
@@ -51,10 +59,10 @@ $background: #f7f7f7;
   margin-bottom: 1rem;
   padding-left: 5rem;
   // height: 4.5rem;
-
+  // border: 1px solid green;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: left;
 
   .pic {
     position: absolute;
@@ -64,6 +72,9 @@ $background: #f7f7f7;
   .name {
     font-weight: 500;
     margin-bottom: 0.125rem;
+    // border: 1px solid yellow;
+    margin-left: 0;
+    padding-left: 0;
   }
 
   .message,
@@ -72,21 +83,21 @@ $background: #f7f7f7;
     color: $text-3;
   }
 
-  .badge {
-    box-sizing: border-box;
-    position: absolute;
-    width: 1.5rem;
-    height: 1.5rem;
-    text-align: center;
-    font-size: 0.9rem;
-    padding-top: 0.125rem;
-    border-radius: 1rem;
+  // .badge {
+  //   box-sizing: border-box;
+  //   position: absolute;
+  //   width: 1.5rem;
+  //   height: 1.5rem;
+  //   text-align: center;
+  //   font-size: 0.9rem;
+  //   padding-top: 0.125rem;
+  //   border-radius: 1rem;
 
-    top: 0;
-    left: 2.5rem;
-    background: $text-1;
-    color: white;
-  }
+  //   top: 0;
+  //   left: 2.5rem;
+  //   background: $text-1;
+  //   color: white;
+  // }
 }
 
 .contacts {
@@ -255,9 +266,9 @@ $background: #f7f7f7;
 // Obviously in a real app I would load this from a DB with JS
 // For now this is a nice quick and easy method to mockup
 
-.pic.stark {
-  background-image: url("https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/7/73/SMH_Mentor_6.png");
-}
+// .pic.stark {
+//   background-image: url("https://xsgames.co/randomusers/avatar.php?g=pixel");
+// }
 .pic.banner {
   background-image: url("https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/4/4f/BruceHulk-Endgame-TravelingCapInPast.jpg");
 }

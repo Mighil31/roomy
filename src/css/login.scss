@@ -159,9 +159,9 @@
 @media only screen and (max-width: 800px) {
   /* For mobile: */
   .login-body {
-    width: 90%;
+    width: 100%;
     flex-direction: column;
-    // border: 1px solid red;
+    border: 1px solid red;
   }
 
   .login-left-pane {

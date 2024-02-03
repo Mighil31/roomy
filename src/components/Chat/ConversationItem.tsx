@@ -21,6 +21,14 @@ const ConversationItem: React.FC<ConversationItemProps> = ({ conversedUser, setS
     // console.log(clickedUser)
     setSelectedUser(clickedUser)
   }
+
+  const style = {
+    '@media (max-width: 600px)': {
+      display: "none"
+    }
+  }
+
+
   const
     { data: lastMessage,
       refetch: refetchLastMessage
@@ -30,9 +38,10 @@ const ConversationItem: React.FC<ConversationItemProps> = ({ conversedUser, setS
     <div className={"listItemContainer" + (selectedUser.userId == conversedUser.userId ? " selectedUser" : "")} onClick={() => handleClick(conversedUser)}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar alt="Remy Sharp" src={`https://picsum.photos/id/${conversedUser.userId}/200/300`} />
         </ListItemAvatar>
         <ListItemText
+          sx={style}
           primary={conversedUser.name}
           secondary={
             <React.Fragment>

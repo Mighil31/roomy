@@ -6,8 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
+import { useEffect } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from '@mui/material/Link';
@@ -74,6 +74,10 @@ export default function Navbar() {
     isError: userDataError,
     refetch: refetchUserData,
   } = useLoadUserQuery({});
+
+  useEffect(() => {
+    refetchUserData();
+  }, [])
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =

@@ -4,6 +4,9 @@ import io from 'socket.io-client';
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import type { Socket } from "socket.io-client";
 import type { RefObject, MutableRefObject } from "react";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import { List, ListItem } from "@mui/material";
 
 interface MessagePaneProps {
   selectUser: ConversedUser;
@@ -49,17 +52,40 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket 
   } = useGetUserQuery({});
 
   let content;
+  let curDate: string;
+
   if (messages == null || messages.length == 0 || isUserLoading)
-    content = <div>Nothing lol</div>
+    content = <div></div>
   else {
     content = messages.map((message) => {
-      if (message.senderId == loggedInUser.userId)
-        return <div key={message.messageId} className="message parker">
-          {message.content}
-        </div>
-      else
-        return <div key={message.messageId} className="message stark">{message.content}</div>
-    })
+      let messageDate = new Date(message.sent_at ? message.sent_at : "").toLocaleDateString();
+      let showDate = false;
+      if (messageDate !== curDate) {
+        showDate = true;
+        curDate = messageDate;
+      }
+
+      if (message.senderId === loggedInUser.userId) {
+        return (
+          <div key={message.messageId}>
+            {showDate && <div className="time">{messageDate}</div>}
+            <div className="message parker">
+              {message.content}
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div key={message.messageId}>
+            {showDate && <div className="time">{messageDate}</div>}
+            <div className="message stark">
+              {message.content}
+            </div>
+          </div>
+
+        );
+      }
+    });
     // socket?.current.on("receive_message", (data) => {
     //   // console.log(`Received message for user ${conversation.userId}:`, data);
     //   // Handle the received message in your React component
@@ -81,12 +107,21 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket 
     <div className="messagesPane">
       <div className="chat">
         <div className="contact bar">
-          <div className="pic stark"></div>
+          <div className="pic">
+            <img src={`https://picsum.photos/id/${selectUser.userId}/75`} />
+            {/* <ListItemAvatar
+              sx={{
+                width: "4rem",
+                height: "4rem"
+              }}
+            >
+              <Avatar alt="Remy Sharp" src={`https://picsum.photos/id/${selectUser.userId}/400`} />
+            </ListItemAvatar> */}
+          </div>
           <div className="name">{selectUser.name}</div>
           <div className="seen">Today at 12:56</div>
         </div>
         <div className="messages" id="chat">
-          <div className="time">Today at 11:41</div>
           {/* <div className="message parker">
             Hey, man! What's up, Mr Stark? 👋
           </div>
