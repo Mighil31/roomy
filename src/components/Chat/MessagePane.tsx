@@ -119,7 +119,6 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket 
             </ListItemAvatar> */}
           </div>
           <div className="name">{selectUser.name}</div>
-          <div className="seen">Today at 12:56</div>
         </div>
         <div className="messages" id="chat">
           {/* <div className="message parker">
