@@ -63,7 +63,7 @@ export default function Login() {
         <div className="login-right-pane">
           <div className="login-title">
             <span>roomy</span>
-            <p>Find your roomate todayy</p>
+            <p>Find your roomate today</p>
           </div>
           <div className="login-form">
             <p>{error}</p>
