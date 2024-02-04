@@ -50,7 +50,7 @@ export default function Chat() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    socket.current = io('/api');
+    socket.current = io('http://35.154.214.36/api');
     socket?.current.on("receive_message", (data) => {
       refetch();
       dispatch(apiSlice.util.invalidateTags(["LastMessage"]))
