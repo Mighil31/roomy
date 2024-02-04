@@ -133,7 +133,7 @@ export default function Login() {
             </Button>
           </div>
           <div className="login__switch">
-            <p>New to roomy? <a href="/signup">Sign Up</a></p>
+            <p>New to roomy?? <a href="/signup">Sign Up</a></p>
           </div>
         </div>
       </div>
