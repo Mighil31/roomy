@@ -50,10 +50,15 @@ export default function Chat() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    socket.current = io('/socket');
+    socket.current = io('http://65.0.73.231/', {
+      path: "/socket"
+    });
     console.log('check 1', socket.current.connected);
     socket.current.on('connect', function () {
       console.log('check 2', socket.current.connected);
+    });
+    socket.current.on("connect_error", (error) => {
+      console.log('socket connection error:', error.message) // socket connection error: server error
     });
     socket?.current.on("receive_message", (data) => {
       refetch();
