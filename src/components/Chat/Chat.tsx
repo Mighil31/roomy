@@ -50,7 +50,7 @@ export default function Chat() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    socket.current = io('http://65.0.73.231/', {
+    socket.current = io('http://3.6.226.148/', {
       path: "/socket"
     });
     console.log('check 1', socket.current.connected);
