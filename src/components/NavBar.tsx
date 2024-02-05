@@ -121,6 +121,7 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}><Link href='/myposts' underline="none" color="black">My Posts</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link href='/messaging' underline="none" color="black">Messages</Link></MenuItem>
       <MenuItem onClick={(e) => handleLogout(e)}>Logout</MenuItem>
     </Menu>
   );

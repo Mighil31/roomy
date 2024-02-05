@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import { constants } from "../../constants/constants";
 import "../../css/chat.scss";
 import List from "@mui/material/List";
+import Loading from "../Utils/Loading";
 import {
   useGetConversationListQuery,
   useGetMessagesQuery,
@@ -95,7 +96,7 @@ export default function Chat() {
 
   let conversationItems;
   if (isConversationListLoading)
-    conversationItems = "Loading"
+    conversationItems = <Loading />
   else if (conversationList != null) {
     conversationItems = conversationList.map((conversedUser: ConversedUser) => {
       return <ConversationItem

@@ -1,4 +1,6 @@
-$highlight-color: #424e66;
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+$highlight-color: #2e3b55;
 $item-color: #ebfbee;
 $navBar_color: #845ef7;
 .post-info {
@@ -71,6 +73,26 @@ $navBar_color: #845ef7;
 .address_body {
   width: 90%;
   padding-left: 30px;
+}
+
+.newPost__header {
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  margin-bottom: 20px;
+  // border: 1px solid red;
+  color: white;
+  padding: 10px;
+  background-color: $highlight-color;
+}
+
+.newPost__link {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  text-decoration: underline;
+  margin-bottom: 20px;
+  cursor: pointer;
+  // border: 1px solid red;
+  padding: 10px;
 }
 
 .post-info__address_display {
