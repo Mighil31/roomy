@@ -70,7 +70,7 @@ export default function NewPostForm({ error, postId, setError }: NewPostFormProp
     }
   }, [postData, isPostDataLoading]);
 
-  console.log(postData)
+  // console.log(postData)
   const sizes = constants.sizesList.map((item) => (
     <div
       className={size === item.value ? "newPost_size selected" : "newPost_size"}
@@ -132,16 +132,16 @@ export default function NewPostForm({ error, postId, setError }: NewPostFormProp
       postBody,
       "noOfFilledRoommates": 0
     };
-    console.log(postData);
+    // console.log(postData);
     try {
       let res;
       if (postId != null && postData && postData.length > 0) {
-        console.log(postSubmitData)
+        // console.log(postSubmitData)
         res = await updatePost({ postId, postSubmitData })
       } else {
         res = await addPost(postSubmitData).unwrap();
       }
-      console.log(res)
+      // console.log(res)
       if (res.error) {
         setError(500);
       } else

@@ -27,7 +27,7 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket 
     setMessageInput('')
 
     if (message.trim() !== '') {
-      console.log("Message send")
+      // console.log("Message send")
       // socket?.current?.emit("send_message", { room, message });
       socket?.current.emit("send_message", { room, message });
       let body = {
@@ -36,7 +36,7 @@ const MessagePane: React.FC<MessagePaneProps> = ({ selectUser, messages, socket 
       }
       let res = await createMessage(body);
       if ('data' in res) {
-        console.log(res?.data[0]);
+        // console.log(res?.data[0]);
         // messages.push(res?.data[0])
 
       }

@@ -147,7 +147,7 @@ export const apiSlice = createApi({
           method: "GET",
         }),
         invalidatesTags: (result, error, data) => {
-          console.log("Invalidate LastMessage tag");
+          // console.log("Invalidate LastMessage tag");
           return ["LastMessage"];
         },
       }),
@@ -160,7 +160,7 @@ export const apiSlice = createApi({
       }),
       createMessage: builder.mutation({
         invalidatesTags: (result, error, data) => {
-          console.log("Invalidate Messages");
+          // console.log("Invalidate Messages");
           return ["Messages"];
         },
         query: ({ conversationId, message }) => ({
@@ -171,7 +171,7 @@ export const apiSlice = createApi({
       }),
       createConversation: builder.mutation({
         invalidatesTags: (result, error, data) => {
-          console.log("Conversation TAG INVALIDATED");
+          // console.log("Conversation TAG INVALIDATED");
           return error.data.errors ? [] : ["Conversation"];
         },
         query: (body) => ({
