@@ -1,5 +1,7 @@
 # Roomy
 
+Hosted in AWS using EC2 - [here](http://3.6.226.148/)
+
 Roomy is a website that is used to help connect people looking for roommates and people looking for rooms. It allows users to create posts regarding their rooms and allows other users to message them regarding their property
 
 It is built using
